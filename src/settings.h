@@ -18,10 +18,9 @@ public:
     
     static const bool fullScreen = false;
     
-    static const int defaultScreenWidth = 1300;//1610;
-    static const int defaultScreenHeight = 700;//900;
+    static const int defaultScreenWidth = 1200;//1610;
+    static const int defaultScreenHeight = 800; //675;//900;
     
-    static const int worldScale = 8;
     static const int frameRate = 60;
     
     static ofVec2f getScreenSize();

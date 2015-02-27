@@ -8,53 +8,29 @@ void ofApp::setup()
     
     worldCreator = new WorldCreator();
 
-    nextLocation = WorldCreator::defaultLocation;
+    travel(WorldCreator::defaultLocation);
 }
 
 void ofApp::update()
 {
-    if(nextLocation == -1)
-        player->update();
+    player->update();
 }
 
 void ofApp::draw()
 {
-    //Create world
-    if(nextLocation != -1)
-    {
-        level = worldCreator->createWorld(nextLocation);
-        ofVec2f levelSize = WorldCreator::getWorldSize();
-        player = new Player(level, input, levelSize.x / 2, levelSize.y / 2);
-        
-        nextLocation = -1;
-    }
+    level->draw(player->cameraPos);
     
-    ofVec2f screenSize = Settings::getScreenSize();
-    
-    ofVec2f worldSize = level->getWorldSize();
-    int worldScale = Settings::worldScale;
-    
-    ofVec2f renderPos;
-    renderPos.x = player-> pos.x - (screenSize.x / 2 / worldScale);
-    renderPos.y = player-> pos.y - (screenSize.y / 2 / worldScale);
-
-    ofSetColor(0, 0, 0);
-    ofRect(0, 0, screenSize.x, screenSize.y);
-    //***Possible blend offset to make camera blend?
-
-    ofSetColor(255);
-    level->image.drawSubsection(0, 0, screenSize.x, screenSize.y, renderPos.x, renderPos.y, screenSize.x / worldScale, screenSize.y / worldScale);
-
-    ofSetColor(255);
     player->draw();
     
+    //Debug outline
     if(false)
     {
+        ofVec2f screenSize = Settings::getScreenSize();
         ofNoFill();
         //ofRect(0, 0, WorldCreator::worldWidth, WorldCreator::worldHeight);
         ofRect(screenSize.x / 2 - WorldCreator::worldWidth / 2, screenSize.y / 2 - WorldCreator::worldHeight / 2, WorldCreator::worldWidth, WorldCreator::worldHeight);
     }
-
+    
     //Location GUI
     std::ostringstream s;
     s << "Location :" << level->location;
@@ -72,6 +48,16 @@ void ofApp::draw()
     }
 }
 
+bool ofApp::travel(int destination)
+{
+    level = worldCreator->createWorld(destination);
+    
+    ofVec2f levelSize = WorldCreator::getWorldSize();
+    
+//    player = new Player(level, input, levelSize.x / 2, levelSize.y / 2);
+    player = new Player(level, input, 50, levelSize.y / 2);
+}
+
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key)
 {
@@ -86,15 +72,30 @@ void ofApp::keyPressed(int key)
 
     if(key == 'o')
     {
-        nextLocation = 0;
+        travel(0);
     }
     else if(key == 'p')
     {
-        nextLocation = level->location + 1;
+        travel(level->location + 1);
     }
     
     if(key == 'i')
         showEdge = !showEdge;
+    
+    if(key == '1')
+        level->setZoom(2);
+    else if(key == '2')
+        level->setZoom(2.5);
+    else if(key == '3')
+        level->setZoom(3);
+    else if(key == '4')
+        level->setZoom(3.5);
+    else if(key == '5')
+        level->setZoom(4);
+    else if(key == '6')
+        level->setZoom(4.5);
+    else if(key == '0')
+        level->setZoom(15);
 }
 
 //--------------------------------------------------------------
@@ -131,8 +132,8 @@ void ofApp::mouseReleased(int x, int y, int button){
 }
 
 //--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-    
+void ofApp::windowResized(int w, int h)
+{
 }
 
 //--------------------------------------------------------------

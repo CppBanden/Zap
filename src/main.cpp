@@ -14,8 +14,7 @@ int main( )
     }
     else
     {
-        ofVec2f screenSize = Settings::getScreenSize();
-        ofSetupOpenGL(screenSize.x, screenSize.y, OF_WINDOW);
+        ofSetupOpenGL(Settings::defaultScreenWidth, Settings::defaultScreenHeight, OF_WINDOW);
     }
     
     ofRunApp(new ofApp());

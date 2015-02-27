@@ -10,10 +10,8 @@
 class ofApp : public ofBaseApp
 {
 public:
-    int nextLocation;
     bool showEdge = false;
-    static int mouseX;
-    
+
     void setup();
     void update();
     void draw();
@@ -27,7 +25,7 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-    ofColor getPixel();
+    bool travel(int location);
     
     Input *input;
     Level *level;

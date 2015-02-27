@@ -14,9 +14,13 @@ Player::Player(Level *l, Input *i, int x, int y)
 {
     level = l;
     input = i;
+    
     pos.x = x;
     pos.y = y;
-
+    
+    cameraPos.x = x;
+    cameraPos.y = y;
+    
     image.loadImage("images/player_01.png");
     image.getTextureReference().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
     totalFrames = image.width/image.height;
@@ -49,9 +53,8 @@ void Player::update()
 
     //Wall friction
     ofColor currentColor = level->getPixel(pos.x, pos.y);
-//    float currentBrightness = currentColor.getBrightness() / 255;
     float currentAlpha = currentColor.a / 255.0f;
-    
+
     if(currentAlpha > 0.2f)
     {
         velocity -= velocity * wallFriction * currentAlpha;
@@ -94,7 +97,15 @@ void Player::update()
 
     pos += velocity;
     
+    ofVec2f previousPos = pos;
+    
     level->wrapPosition(&pos);
+    
+    //Camera follow
+    cameraPos.x += pos.x - previousPos.x;
+    cameraPos.y += pos.y - previousPos.y;
+    
+    cameraPos += (pos - cameraPos) * cameraFollowSpeed;
 }
 
 void Player::draw()
@@ -108,7 +119,18 @@ void Player::draw()
     {
         ///TODO handle frame counting
         int currentFrame = (int)((ofGetFrameNum() / (float)Settings::frameRate) * fps) % totalFrames;
-        image.drawSubsection((screenSize.x - size) / 2, (screenSize.y - size) / 2, size, size, 3 * currentFrame, 0, 3, 3);
+        
+        ///TODO zoom dependent size, probably a general system
+        float ratio = (screenSize.x / level->zoomSize.x);
+        
+        ofVec2f drawPos;
+        drawPos.x = (level->drawArea.x - size) / 2;
+        drawPos.x += (pos.x - cameraPos.x) * ratio;
+        
+        drawPos.y = (level->drawArea.y - size) / 2;
+        drawPos.y += (pos.y - cameraPos.y) * ratio;
+        
+        image.drawSubsection(drawPos.x, drawPos.y, size, size, 3 * currentFrame, 0, 3, 3);
     }
 
     //Fuel bar small background

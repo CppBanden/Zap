@@ -20,19 +20,20 @@ class Player
 public:
     
     ofVec2f pos;
+    ofVec2f cameraPos;
     ofVec2f velocity;
     ofImage image;
-    
+
     Input *input;
     Level *level;
     
     float size = 20;
     
-    float moveSpeed =0.004;//0.013;
+    float moveSpeed = 0.013; //0.004;
     float maxMoveSpeed = 0.5;
-    float friction = 0;//0.0035;
+    float friction = 0.0035; //0
     
-    float wallFriction = 0.5;
+    float wallFriction = 0.1;
     float digSpeed = 0.04f;
     float digSpeedEdge = 0.005f;
     
@@ -44,6 +45,9 @@ public:
     float fuel = 100;
     float fuelDrainMove = 0.0006f;
     float fuelDrainDig = 0.3f;
+  
+    //Camera
+    float cameraFollowSpeed = 0.045f;
     
     Player(Level *l, Input *i, int x, int y);
 
