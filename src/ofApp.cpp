@@ -18,22 +18,22 @@ void ofApp::update()
 
 void ofApp::draw()
 {
-    level->draw(player->cameraPos);
+    world->draw(player->cameraPos);
     
     player->draw();
     
     //Debug outline
-    if(false)
+/*    if(false)
     {
         ofVec2f screenSize = Settings::getScreenSize();
         ofNoFill();
         //ofRect(0, 0, WorldCreator::worldWidth, WorldCreator::worldHeight);
         ofRect(screenSize.x / 2 - WorldCreator::worldWidth / 2, screenSize.y / 2 - WorldCreator::worldHeight / 2, WorldCreator::worldWidth, WorldCreator::worldHeight);
-    }
+    }*/
     
     //Location GUI
     std::ostringstream s;
-    s << "Location :" << level->location;
+    s << "Location :" << world->location;
     ofDrawBitmapStringHighlight(s.str(), 15, 20);
     
     //Debug info
@@ -42,7 +42,7 @@ void ofApp::draw()
         ofDrawBitmapStringHighlight(player->getDebugPos(), 15, 80);
         //printf("bright %f \n", level->getPixel(player->pos.x, player->pos.y).getBrightness() / 255);
 
-        ofSetColor(level->getPixel(player->pos.x, player->pos.y));
+        ofSetColor(world->getPixel(player->pos.x, player->pos.y));
         ofFill();
         ofDrawPlane(82, 115, 140, 20);
     }
@@ -50,12 +50,18 @@ void ofApp::draw()
 
 bool ofApp::travel(int destination)
 {
-    level = worldCreator->createWorld(destination);
+    world = worldCreator->createWorld(destination);
     
-    ofVec2f levelSize = WorldCreator::getWorldSize();
+//    ofVec2f levelSize = WorldCreator::getWorldSize();
     
 //    player = new Player(level, input, levelSize.x / 2, levelSize.y / 2);
-    player = new Player(level, input, 50, levelSize.y / 2);
+    ofVec2f landingSpot = world->worldSize;
+    landingSpot.x /= 2;
+    landingSpot.y /= 2;
+  //  landingSpot.x = 200;
+//    landingSpot.y = 200;
+
+    player = new Player(world, input, landingSpot.x, landingSpot.y);
 }
 
 //--------------------------------------------------------------
@@ -76,26 +82,26 @@ void ofApp::keyPressed(int key)
     }
     else if(key == 'p')
     {
-        travel(level->location + 1);
+        travel(world->location + 1);
     }
     
     if(key == 'i')
         showEdge = !showEdge;
     
     if(key == '1')
-        level->setZoom(2);
+        world->setZoom(1.5); //Current expected default zoom
     else if(key == '2')
-        level->setZoom(2.5);
+        world->setZoom(world->zoom + 0.25f);
     else if(key == '3')
-        level->setZoom(3);
+        world->setZoom(world->zoom - 0.25f);
     else if(key == '4')
-        level->setZoom(3.5);
+        world->setZoom(world->zoom + 2);
     else if(key == '5')
-        level->setZoom(4);
-    else if(key == '6')
-        level->setZoom(4.5);
+        world->setZoom(world->zoom - 2);
     else if(key == '0')
-        level->setZoom(15);
+        world->setZoom(35); //Really far away
+    
+    ///TODO should shoul entire level
 }
 
 //--------------------------------------------------------------

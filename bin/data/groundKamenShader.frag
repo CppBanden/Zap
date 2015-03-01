@@ -1,11 +1,15 @@
 #version 150
 
 uniform float time;
+uniform float sharpnees = 2.5f;
+uniform float density = 0;
+uniform vec2 detailSize = vec2(640, 480);
+uniform vec2 worldSize;
+uniform vec2 screenSize;
+
 uniform vec3 randomColor;
 uniform sampler2DRect imageMask;
 
-uniform vec2 worldSize;
-uniform vec2 screenSize;
 
 out vec4 outputColor;
 
@@ -66,12 +70,12 @@ float cnoise(vec2 P)
     vec2 fade_xy = fade(Pf.xy);
     vec2 n_x = mix(vec2(n00, n01), vec2(n10, n11), fade_xy.x);
     float n_xy = mix(n_x.x, n_x.y, fade_xy.y);
-    return 2.3 * n_xy;
+    return 2.3f * n_xy;
 }
 
 float fbm(vec2 P, int octaves, float lacunarity, float gain)
 {
-    float sum = 0.0;
+    float sum = density;
     float amp = 1.0;
     vec2 pp = P;
     
@@ -89,8 +93,8 @@ float fbm(vec2 P, int octaves, float lacunarity, float gain)
 
 float pattern2( in vec2 p, out vec2 q, out vec2 r , in float time)
 {
-    float l = 2.3;
-    float g = 0.4;
+    float l = 2.3;//5 for sand
+    float g = 0.4;//0.4;
     int oc = 10;
     
     q.x = fbm( p + vec2(time,time),oc,l,g);
@@ -104,21 +108,19 @@ float pattern2( in vec2 p, out vec2 q, out vec2 r , in float time)
 
 void main()
 {
-    vec2 q = gl_FragCoord.xy / vec2(640.0,480.0);
-    
+    vec2 q = gl_FragCoord.xy / vec2(detailSize.xy);
     vec2 p = -1.0 + 2.0 * q;
     vec2 qq;
     vec2 r;
     float result = pattern2(p,qq,r,time);
 
-//    vec2 w = vec2(gl_FragCoord.x, (worldSize.y - gl_FragCoord.y) + (screenSize.y - worldSize.y)); ///TODO Move to generator
-    vec2 w = vec2(gl_FragCoord.x, gl_FragCoord.y); ///TODO Move to generator
-    vec4 texel = texture(imageMask, w.xy);
-
-    vec4 c = vec4(randomColor.x, randomColor.y, randomColor.z, result * texel.z);
-    c *= 2.5;// * texel.x;//0.75;//(texel.x + 0.5f);
-//    c = texel;
+    vec2 w = vec2(gl_FragCoord.x, gl_FragCoord.y);
+    vec4 texel = texture(imageMask, w.xy); 
     
+    vec4 c = vec4(randomColor.x, randomColor.y, randomColor.z, result * texel.z * sharpnees);
+//    c *= 2.5;// * texel.x;//0.75;//(texel.x + 0.5f);
+//    c = texel;
 //    c = vec4(100, 0, 50, texel.x);
+    
     outputColor = c;
 }

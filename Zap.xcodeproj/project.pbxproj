@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5B03F9091A86965C00FE40E9 /* player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B03F9071A86965C00FE40E9 /* player.cpp */; };
-		5B03F90E1A86979E00FE40E9 /* level.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B03F90C1A86979E00FE40E9 /* level.cpp */; };
+		5B03F90E1A86979E00FE40E9 /* world.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B03F90C1A86979E00FE40E9 /* world.cpp */; };
 		5B2445F21A90CE36001C453B /* metaballGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B2445F01A90CE36001C453B /* metaballGenerator.cpp */; };
 		5B35BA8B1A89895700CE15E4 /* settings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B35BA891A89895700CE15E4 /* settings.cpp */; };
 		5B75F9F71A8EC9270030EDB1 /* worldCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B75F9F51A8EC9270030EDB1 /* worldCreator.cpp */; };
@@ -67,8 +67,8 @@
 		5B03F9071A86965C00FE40E9 /* player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = player.cpp; sourceTree = "<group>"; };
 		5B03F9081A86965C00FE40E9 /* player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = player.h; sourceTree = "<group>"; };
 		5B03F90A1A86967700FE40E9 /* input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = input.h; sourceTree = "<group>"; };
-		5B03F90C1A86979E00FE40E9 /* level.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = level.cpp; sourceTree = "<group>"; };
-		5B03F90D1A86979E00FE40E9 /* level.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = level.h; sourceTree = "<group>"; };
+		5B03F90C1A86979E00FE40E9 /* world.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = world.cpp; sourceTree = "<group>"; };
+		5B03F90D1A86979E00FE40E9 /* world.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = world.h; sourceTree = "<group>"; };
 		5B03F9121A86ED1800FE40E9 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		5B03F9131A86ED1800FE40E9 /* cave.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cave.png; sourceTree = "<group>"; };
 		5B03F9161A86FFC500FE40E9 /* img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = img.jpg; sourceTree = "<group>"; };
@@ -93,6 +93,10 @@
 		5B35BA891A89895700CE15E4 /* settings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = settings.cpp; sourceTree = "<group>"; };
 		5B35BA8A1A89895700CE15E4 /* settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = settings.h; sourceTree = "<group>"; };
 		5B47FC981A92B833000AC7E3 /* player_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = player_01.png; sourceTree = "<group>"; };
+		5B6273151AA37EFD006F32F9 /* surfaceShader.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = surfaceShader.frag; sourceTree = "<group>"; };
+		5B6273161AA37EFD006F32F9 /* surfaceShader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = surfaceShader.vert; sourceTree = "<group>"; };
+		5B6273171AA3D522006F32F9 /* spaceShader.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = spaceShader.frag; sourceTree = "<group>"; };
+		5B6273181AA3D522006F32F9 /* spaceShader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = spaceShader.vert; sourceTree = "<group>"; };
 		5B75F9F51A8EC9270030EDB1 /* worldCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = worldCreator.cpp; sourceTree = "<group>"; };
 		5B75F9F61A8EC9270030EDB1 /* worldCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = worldCreator.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
@@ -156,6 +160,10 @@
 				5B2445F41A90DDB7001C453B /* metaballShader.vert */,
 				5B2446011A9129E9001C453B /* groundKamenShader.frag */,
 				5B2446021A9129E9001C453B /* groundKamenShader.vert */,
+				5B6273151AA37EFD006F32F9 /* surfaceShader.frag */,
+				5B6273161AA37EFD006F32F9 /* surfaceShader.vert */,
+				5B6273171AA3D522006F32F9 /* spaceShader.frag */,
+				5B6273181AA3D522006F32F9 /* spaceShader.vert */,
 				5B20D4261A9AA2D400747164 /* testShader.frag */,
 				5B20D4271A9AA2D400747164 /* testShader.vert */,
 				5B03F9131A86ED1800FE40E9 /* cave.png */,
@@ -267,8 +275,8 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
-				5B03F90C1A86979E00FE40E9 /* level.cpp */,
-				5B03F90D1A86979E00FE40E9 /* level.h */,
+				5B03F90C1A86979E00FE40E9 /* world.cpp */,
+				5B03F90D1A86979E00FE40E9 /* world.h */,
 				5B35BA891A89895700CE15E4 /* settings.cpp */,
 				5B35BA8A1A89895700CE15E4 /* settings.h */,
 				5B75F9F51A8EC9270030EDB1 /* worldCreator.cpp */,
@@ -377,7 +385,7 @@
 			files = (
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
-				5B03F90E1A86979E00FE40E9 /* level.cpp in Sources */,
+				5B03F90E1A86979E00FE40E9 /* world.cpp in Sources */,
 				5B2445F21A90CE36001C453B /* metaballGenerator.cpp in Sources */,
 				5B75F9F71A8EC9270030EDB1 /* worldCreator.cpp in Sources */,
 				5B35BA8B1A89895700CE15E4 /* settings.cpp in Sources */,

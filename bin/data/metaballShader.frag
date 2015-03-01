@@ -5,7 +5,7 @@ uniform vec2 screenSize;
 
 out vec4 outputColor;
 
-#define NUM_BALLS 40
+#define NUM_BALLS 100
 
 uniform vec3 metaballs[NUM_BALLS];
 
@@ -13,8 +13,8 @@ void main( void )
 {
     float ratio = worldSize.y / worldSize.x;
     float divider = 25; //outter
-    float intensity = 12; //inner
-    
+    float intensity = 10; //inner
+
     float coordX = gl_FragCoord.x / worldSize.x;
     float coordY = gl_FragCoord.y / worldSize.x;
 
@@ -46,9 +46,19 @@ void main( void )
 
     sum = pow(sum / intensity, divider);
    
+    if(sum < 1)
+        sum = 0;
+    
     //Clamp
-    //if(sum < 1)
-    //    sum = 0;
+/*    if(sum < 1 && sum > 0.1)
+    {
+        sum = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898,78.233))) * 43758.5453) * sum * 1.25;
+        
+        if(sum > 0.4)
+            sum = 1;
+        else
+            sum = 0;
+    }*/
     
     outputColor = vec4(1, 1, 1, sum);
 }

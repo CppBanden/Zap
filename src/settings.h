@@ -16,10 +16,10 @@ class Settings
 {
 public:
     
-    static const bool fullScreen = false;
+    static const bool fullScreen = true;
     
-    static const int defaultScreenWidth = 1200;//1610;
-    static const int defaultScreenHeight = 800; //675;//900;
+    static const int defaultScreenWidth = 1600;//1610;
+    static const int defaultScreenHeight = 900; //675;//900;
     
     static const int frameRate = 60;
     

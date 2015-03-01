@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 #include "ofMain.h"
-#include "level.h"
+#include "world.h"
 #include "metaballGenerator.h"
 #include "settings.h"
 
@@ -19,19 +19,17 @@ class WorldCreator
 {
 public:
     ofShader groundShader;
+    ofShader surfaceShader;
+    
     vector<ofVec3f> groundColors;
     MetaballGenerator *metaballGenerator;
     
     WorldCreator();
-    Level *createWorld(int locationInput);
+    World *createWorld(int locationInput);
     void showShader(int locationInput);
     ofVec3f getRandomColor();
 
-    static const int defaultLocation = 674685952;
-    static const int worldWidth = 600;
-    static const int worldHeight = 400;
-    
-    static ofVec2f getWorldSize();
+    static const int defaultLocation = 41605059;
 };
 
 #endif /* defined(__Sap__worldCreator__) */

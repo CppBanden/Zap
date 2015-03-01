@@ -10,7 +10,7 @@
 #include "ofApp.h"
 #include "player.h"
 
-Player::Player(Level *l, Input *i, int x, int y)
+Player::Player(World *l, Input *i, int x, int y)
 {
     level = l;
     input = i;
@@ -50,38 +50,43 @@ void Player::update()
 
     //Friction
     velocity -= velocity.normalized() * friction;
-
+    
+    ///TODO very little control and barely any friction in open space
+    
     //Wall friction
     ofColor currentColor = level->getPixel(pos.x, pos.y);
     float currentAlpha = currentColor.a / 255.0f;
 
-    if(currentAlpha > 0.2f)
+    if(currentAlpha > 0.1f)
     {
         velocity -= velocity * wallFriction * currentAlpha;
         fuel -= fuelDrainDig * currentAlpha;
     }
     
+    ///TODO dig ahead of player instead of current pixel
     //Dig
     if(currentAlpha != 0)
     {
-        float nextBrightness = currentAlpha - digSpeed;
+        float nextAlpha = currentAlpha - digSpeed;
         
-        if(currentAlpha > 0.2f && nextBrightness < 0.2f)
-            nextBrightness = 0.2f;
+        if(currentAlpha > 0.1f && nextAlpha < 0.1f)
+            nextAlpha = 0.1f;
         
-        if(currentAlpha < 0)
-            currentAlpha = 0;
+        if(nextAlpha < 0)
+            nextAlpha = 0;
         
         ofColor nextColor = currentColor;
-        nextColor.setBrightness(nextBrightness * 255);
+
+        nextColor.a = nextAlpha * 255;
         
         level->setPixel(pos.x, pos.y, nextColor);
         
         ///TODO larger digging area
-        level->fadePixel(pos.x+1, pos.y, digSpeedEdge);
+        ///TODO fixe digging edges
+/*        level->fadePixel(pos.x+1, pos.y, digSpeedEdge);
         level->fadePixel(pos.x-1, pos.y, digSpeedEdge);
         level->fadePixel(pos.x, pos.y+1, digSpeedEdge);
-        level->fadePixel(pos.x, pos.y-1, digSpeedEdge);
+        level->fadePixel(pos.x, pos.y-1, digSpeedEdge);*/
 
         level->updateImage();
     }

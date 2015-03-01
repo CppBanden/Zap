@@ -14,18 +14,17 @@ MetaballGenerator::MetaballGenerator()
 
 }
 
-ofTexture MetaballGenerator::generate()
+ofTexture MetaballGenerator::generate(ofVec2f worldSize, float area, float density)
 {
     if(!metaballShader.isLoaded())
         metaballShader.load("metaballShader");
     
-    ofVec2f worldSize = WorldCreator::getWorldSize();
-    float minSize = 0.001f;
-    float maxSize = 0.01f;
-    float border = 0.15f;
-    
-    int metaBallCount = 40;
-    ofVec3f metaballs[40];
+    float minSize = 0.002f; //float minSize = 0.001f;
+    float maxSize = ofRandom(0.003f, 0.0035f); //float maxSize = 0.01f;
+    float border = 0.17f;
+
+    int metaBallCount = 100 * density;
+    ofVec3f metaballs[100];
     
     for(int i = 0; i < metaBallCount; ++i)
     {

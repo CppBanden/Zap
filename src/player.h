@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include "ofMain.h"
 #include "input.h"
-#include "level.h"
+#include "world.h"
 #include "settings.h"
 
 class Player
@@ -25,7 +25,7 @@ public:
     ofImage image;
 
     Input *input;
-    Level *level;
+    World *level;
     
     float size = 20;
     
@@ -33,8 +33,8 @@ public:
     float maxMoveSpeed = 0.5;
     float friction = 0.0035; //0
     
-    float wallFriction = 0.1;
-    float digSpeed = 0.04f;
+    float wallFriction = 0.5f;
+    float digSpeed = 0.05f;
     float digSpeedEdge = 0.005f;
     
     int frame;
@@ -44,12 +44,12 @@ public:
     //Fuel
     float fuel = 100;
     float fuelDrainMove = 0.0006f;
-    float fuelDrainDig = 0.3f;
+    float fuelDrainDig = 0.35f;
   
     //Camera
     float cameraFollowSpeed = 0.045f;
     
-    Player(Level *l, Input *i, int x, int y);
+    Player(World *w, Input *i, int x, int y);
 
     void draw();
     void update();

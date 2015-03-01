@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "player.h"
 #include "input.h"
-#include "level.h"
+#include "world.h"
 #include "settings.h"
 #include "worldCreator.h"
 
@@ -28,7 +28,7 @@ public:
     bool travel(int location);
     
     Input *input;
-    Level *level;
+    World *world;
     Player *player;
     WorldCreator *worldCreator;
 };

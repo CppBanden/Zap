@@ -13,52 +13,8 @@ WorldCreator::WorldCreator()
      metaballGenerator = new MetaballGenerator();
 }
 
-bool first = true;
-
-void WorldCreator::showShader(int locationInput)
-{
-    ofVec2f worldSize = getWorldSize();
-    
-    ofTexture outlineTexture = metaballGenerator->generate();
-    float randomTime = ofRandom(0, 1000);
-    
-    ofFbo frameBuffer;
-    
-    frameBuffer.allocate(worldSize.x, worldSize.y, GL_RGBA);
-    frameBuffer.begin();
-        ofClear(255,255,255, 0);
-        if(!groundShader.isLoaded())
-            groundShader.load("groundKamenShader");
-    
-        groundShader.begin();
-        groundShader.setUniform1f("time", randomTime); //shader.setUniform1f("time", ofGetFrameNum() * 0.0005);
-        groundShader.setUniformTexture("imageMask", outlineTexture, 0);
-
-        ofRect(0,0, worldSize.x, worldSize.y);
-    
-        groundShader.end();
-    frameBuffer.end();
-//    frameBuffer.getTextureReference().draw(0,0);
-    
-    ofTexture frameBufferTexture = frameBuffer.getTextureReference();
-    ofPixels pixels;
-    frameBuffer.readToPixels(pixels);
-    
-    //ofPixels pixels;
-    //outlineTexture.readToPixels(pixels);
-    
-    ofImage newImage;
-    newImage.allocate(worldSize.x, worldSize.y, OF_IMAGE_COLOR_ALPHA);
-    newImage.setFromPixels(pixels);
-    
-
-    Level *level = new Level(newImage, 0);
-    
-    level->image.draw(0, 0);
-}
-
-Level *WorldCreator::createWorld(int locationInput)
-{
+World *WorldCreator::createWorld(int locationInput)
+{    
     //Handle Location
     int location;
     
@@ -69,17 +25,84 @@ Level *WorldCreator::createWorld(int locationInput)
 
     ofSeedRandom(location);
     printf("travel to location : %i \n", location);
+
+    //Settings
+    float maxSize = 3000;
+    float minSize = 500;
+    ///TODO create comfortable worlds with 10% large deviation
+    float minArea = minSize * minSize;
+    float maxArea = maxSize * maxSize;
+    
+    float minDensity = 0.3;
+    minDensity = 1;
+    float maxDensity = 1;
+    
+    //Preparation
+    ofVec2f screenSize = Settings::getScreenSize();
+    ofFbo frameBuffer;
+    ofPixels pixels;
+    
+    ///TODO consider tool to just randomize one element
     
     //Create World
     ofVec3f groundColor = getRandomColor();
-    float randomTime = ofRandom(0, 1000);
-    ofVec2f worldSize = getWorldSize();
-    
-    //World outline
-    ofTexture outlineTexture = metaballGenerator->generate();
 
-    ofFbo frameBuffer;
+    ofVec3f surfaceColor = groundColor; ///Allow different ground color
+    surfaceColor /= ofRandom(4, 5);
+
+    float worldWidth = ofRandom(minSize, maxSize);
+    float worldHeight = ofRandom( MAX(worldWidth / 2, minSize), MIN(worldWidth * 2, maxSize));
+    
+    ofVec2f worldSize(worldWidth, worldHeight);
     frameBuffer.allocate(worldSize.x, worldSize.y, GL_RGBA);
+
+    float area = ofLerp(minArea, maxArea, worldSize.x * worldSize.y);
+    float density = ofRandom(minDensity, maxDensity);
+
+    //World outline
+    ofTexture outlineTexture = metaballGenerator->generate(worldSize, area, density);
+    
+    //Surface
+    frameBuffer.begin();
+        ofClear(255,255,255,0);
+    
+        if(!surfaceShader.isLoaded())
+            surfaceShader.load("surfaceShader");
+    
+        surfaceShader.begin();
+    
+        surfaceShader.setUniformTexture("imageMask", outlineTexture, 0);
+        surfaceShader.setUniform3fv("randomColor", &surfaceColor[0]);
+
+        ofRect(0,0,worldSize.x, worldSize.y);
+    
+        surfaceShader.end();
+    frameBuffer.end();
+    
+    ofImage imageSurface;
+    imageSurface.allocate(worldSize.x, worldSize.y, OF_IMAGE_COLOR_ALPHA);
+    frameBuffer.readToPixels(pixels);
+    imageSurface.setFromPixels(pixels);
+
+    //Rocks
+    float sharpness = ofRandom(2.0f, 2.25f);
+    float randomTime = ofRandom(0, 1000); ///Event very high time to pixelate 100000 and above
+
+    float rockDensity = ofRandom(0, 0.12f);
+    if(ofRandom(1) > 0.85f)
+        rockDensity = ofRandom(0, 0.3f);
+    
+    ofVec2f rockDetailSize;
+    rockDetailSize.x = ofRandom(550, 700);
+    if(ofRandom(1) > 0.9f)
+        rockDetailSize.x = ofRandom(700, 3000);
+    
+    float rockDetailRatio = ofRandom(0.7f, 0.8f);
+    if(ofRandom(1) > 0.9f)
+        rockDetailRatio = ofRandom(0.5f, 1.75f);
+    
+    rockDetailSize.y = rockDetailSize.x * rockDetailRatio;
+    
     frameBuffer.begin();
         ofClear(255,255,255, 0);
     
@@ -87,49 +110,37 @@ Level *WorldCreator::createWorld(int locationInput)
             groundShader.load("groundKamenShader");
 
         groundShader.begin();
-    
-        groundShader.setUniformTexture("imageMask", outlineTexture, 0);
 
-        groundShader.setUniform3fv("randomColor", &groundColor[0]);
         groundShader.setUniform1f("time", randomTime); //shader.setUniform1f("time", ofGetFrameNum() * 0.0005);
+        groundShader.setUniform1f("sharpness", sharpness);
+        groundShader.setUniform1f("density", rockDensity);
     
-        groundShader.setUniform2f("worldSize", WorldCreator::worldWidth, WorldCreator::worldHeight);
+        ///TODO blend between multiple colors
+        groundShader.setUniform3fv("randomColor", &groundColor[0]);
+        groundShader.setUniformTexture("imageMask", outlineTexture, 0);
     
-        ofVec2f screenSize = Settings::getScreenSize();
+        groundShader.setUniform2f("detailSize", rockDetailSize.x, rockDetailSize.y);
+        groundShader.setUniform2f("worldSize", worldSize.x, worldSize.y);
         groundShader.setUniform2f("screenSize", screenSize.x, screenSize.y); //shader.setUniform1f("time", ofGetFrameNum() * 0.0005);
     
         ofRect(0,0, worldSize.x, worldSize.y);
     
         groundShader.end();
     frameBuffer.end();
-    
-    ofTexture frameBufferTexture = frameBuffer.getTextureReference();
-    ofPixels pixels;
+
+    ofImage imageRocks;
+    imageRocks.allocate(worldSize.x, worldSize.y, OF_IMAGE_COLOR_ALPHA);
     frameBuffer.readToPixels(pixels);
-
-    //ofPixels pixels;
-    //outlineTexture.readToPixels(pixels);
+    imageRocks.setFromPixels(pixels);
     
-    ofImage newImage;
-    newImage.allocate(worldSize.x, worldSize.y, OF_IMAGE_COLOR_ALPHA);
-    newImage.setFromPixels(pixels);
+    World *world = new World(imageRocks, imageSurface, location);
     
-    //fbo->draw(0, 0, worldSize.x, worldSize.y);
-//    ofBackground(0, 150, 0);
-    
-    Level *level = new Level(newImage, location);
-    return level;
-}
-
-
-ofVec2f WorldCreator::getWorldSize()
-{
-    return ofVec2f(worldWidth, worldHeight);
+    return world;
 }
 
 ofVec3f WorldCreator::getRandomColor()
 {
-    if(groundColors.empty())
+    /*if(groundColors.empty())
     {
         groundColors.push_back(ofVec3f(0.112818, 0.128799, 0.726646));
         groundColors.push_back(ofVec3f(0.112818, 0.128799, 0.726646));
@@ -145,9 +156,13 @@ ofVec3f WorldCreator::getRandomColor()
         groundColors.push_back(ofVec3f(0.199442, 0.024695, 0.052515));
     }
 
-    int i = floor(ofRandom(0, groundColors.size() - 0.01f));
-    return groundColors[i];
+    int i = floor(ofRandom(0, groundColors.size() - 0.01f));*/
+    //return groundColors[i];
+    
+    ///TODO consider range control, Hue, Saturation, Brightness
     
     //printf("color inden %i \n", colorIndex);
-    //return ofColor(ofRandom(1), ofRandom(1), ofRandom(1));
+    ofVec3f randomColor(ofRandom(1),ofRandom(1),ofRandom(1));
+    return randomColor;
+//    return ofColor(ofRandom(1), ofRandom(1), ofRandom(1));
 }
