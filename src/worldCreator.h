@@ -29,7 +29,7 @@ public:
     void showShader(int locationInput);
     ofVec3f getRandomColor();
 
-    static const int defaultLocation = 41605059;
+    static const int defaultLocation = 891562688;
 };
 
 #endif /* defined(__Sap__worldCreator__) */

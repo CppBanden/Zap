@@ -42,7 +42,7 @@ void ofApp::draw()
         ofDrawBitmapStringHighlight(player->getDebugPos(), 15, 80);
         //printf("bright %f \n", level->getPixel(player->pos.x, player->pos.y).getBrightness() / 255);
 
-        ofSetColor(world->getPixel(player->pos.x, player->pos.y));
+        ofSetColor(world->getRockPixel(player->pos.x, player->pos.y));
         ofFill();
         ofDrawPlane(82, 115, 140, 20);
     }
@@ -58,8 +58,8 @@ bool ofApp::travel(int destination)
     ofVec2f landingSpot = world->worldSize;
     landingSpot.x /= 2;
     landingSpot.y /= 2;
-  //  landingSpot.x = 200;
-//    landingSpot.y = 200;
+    landingSpot.x = 450;
+    landingSpot.y = 900;
 
     player = new Player(world, input, landingSpot.x, landingSpot.y);
 }

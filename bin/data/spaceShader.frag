@@ -30,7 +30,7 @@ void main(void)
         color = 1.0 - distance(gl_FragCoord.xy, center) / (0.5 * size);
         color = color * t / (abs(gl_FragCoord.y - center.y)) * t / (abs(gl_FragCoord.x - center.x));
     }
-    else*/ if (rand(gl_FragCoord.xy / worldSize.xy) > 0.9996)
+    else*/ if (rand(gl_FragCoord.xy / worldSize.xy) > 0.9994)
     {
         float r = rand(gl_FragCoord.xy);
         color = r;// * (0.25 * sin(iGlobalTime * (r * 5.0) + 720.0 * r) + 0.75);

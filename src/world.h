@@ -37,7 +37,8 @@ public:
     void wrapPosition(ofVec2f *pos);
     void generateLevel();
     ofVec2f getWorldSize();
-    ofColor getPixel(int x, int y);
+    ofColor getRockPixel(int x, int y);
+    ofColor getSurfacePixel(int x, int y);
     void setZoom(float zoom);
 };
 

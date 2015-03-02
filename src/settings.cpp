@@ -10,18 +10,7 @@
 
 ofVec2f Settings::getScreenSize()
 {
-    ofVec2f size;
-    
-    //if(fullScreen)
-    {
-        size.x = ofGetWidth();
-        size.y = ofGetHeight();
-    }
-    /*else
-    {
-        size.x = defaultScreenWidth;
-        size.y = defaultScreenHeight;
-    }*/
-    
+    ofVec2f size(ofGetWidth(), ofGetHeight());
+
     return size;
 }

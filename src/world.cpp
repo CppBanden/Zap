@@ -105,6 +105,16 @@ void World::fadePixel(int x, int y, float amount)
     imageRocks.setColor(x, y, current);
 }
 
+ofColor World::getRockPixel(int x, int y)
+{
+    return imageRocks.getColor(x, y);
+}
+
+ofColor World::getSurfacePixel(int x, int y)
+{
+    return imageSurface.getColor(x, y);
+}
+
 void World::updateImage()
 {
     imageRocks.update();
@@ -114,7 +124,7 @@ void World::setZoom(float zoomInput)
 {
     ///TODO world ratio should not be set here
     zoomSize.x = 160 * zoomInput;
-    zoomSize.y = 90 * zoomInput;
+    zoomSize.y = 100 * zoomInput;
     
     World::zoom = zoomInput;
 }
@@ -124,10 +134,7 @@ ofVec2f World::getWorldSize()
     return worldSize;
 }
 
-ofColor World::getPixel(int x, int y)
-{
-    return imageRocks.getColor(x, y);
-}
+
 
 void World::wrapPosition(ofVec2f *pos)
 {

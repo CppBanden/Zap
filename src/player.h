@@ -28,23 +28,30 @@ public:
     World *level;
     
     float size = 20;
+    float fuel = 100;
     
-    float moveSpeed = 0.013; //0.004;
-    float maxMoveSpeed = 0.5;
-    float friction = 0.0035; //0
+    //Grounded Velocity
+    float moveSpeed = 0.013f; //0.004;
+    float maxMoveSpeed = 0.5f;
+    float friction = 0.0035f; //0
+    float fuelDrainMove = 0.0006f;
+    float fuelDrainDig = 0.35f;
     
+    //Floating Velocity
+    float moveSpeedFloating = 0.008;
+    float frictionFloating = 0;
+    float maxMoveSpeedFloating = 0.7f;
+    float fuelDrainMoveFloating = 0.0003f;
+    
+    //Digging
     float wallFriction = 0.5f;
     float digSpeed = 0.05f;
     float digSpeedEdge = 0.005f;
     
+    //Visuals
     int frame;
     int totalFrames = 13;
     int fps = 4;
-    
-    //Fuel
-    float fuel = 100;
-    float fuelDrainMove = 0.0006f;
-    float fuelDrainDig = 0.35f;
   
     //Camera
     float cameraFollowSpeed = 0.045f;

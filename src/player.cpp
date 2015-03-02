@@ -41,20 +41,45 @@ void Player::update()
     else if(input->downPressed)
         moveDir.y = 1;
     
-    //Acceleration
-    if(fuel > 0 && (moveDir.x != 0 || moveDir.y != 0))
-    {
-        velocity += moveDir.normalize() * moveSpeed;
-        fuel -= fuelDrainMove;
-    }
-
-    //Friction
-    velocity -= velocity.normalized() * friction;
+    moveDir.normalize();
     
-    ///TODO very little control and barely any friction in open space
+    ofColor currentSurfaceColor = level->getSurfacePixel(pos.x, pos.y);
+    bool isGrounded = currentSurfaceColor.a > 0.1f;
+
+    if(isGrounded)
+    {
+        //Acceleration
+        if(fuel > 0 && (moveDir.x != 0 || moveDir.y != 0))
+        {
+            velocity += moveDir * moveSpeed;
+            fuel -= fuelDrainMove;
+        }
+        
+        //Friction
+        float currentFriction = isGrounded ? friction : frictionFloating;
+        velocity -= velocity.normalized() * currentFriction;
+    }
+    else
+    {
+        //Acceleration
+        if(fuel > 0 && (moveDir.x != 0 || moveDir.y != 0))
+        {
+            float alignment = (moveDir.dot(velocity.normalized()) + 1) / 2;
+            float control;
+            
+            if(velocity.length() < 0.35f)
+                control = 0.5f + 0.5f * alignment;
+            else
+                control = 0.1f + 0.9f * alignment;
+            
+            velocity += moveDir * moveSpeedFloating * control;
+            
+            fuel -= fuelDrainMoveFloating;
+        }
+    }
     
     //Wall friction
-    ofColor currentColor = level->getPixel(pos.x, pos.y);
+    ofColor currentColor = level->getRockPixel(pos.x, pos.y);
     float currentAlpha = currentColor.a / 255.0f;
 
     if(currentAlpha > 0.1f)
@@ -94,8 +119,9 @@ void Player::update()
     float speed = velocity.length();
     
     //Max speed
-    if(speed > maxMoveSpeed)
-        velocity = velocity.normalized() * maxMoveSpeed;
+    float curretnMaxMoveSpeed = isGrounded ? maxMoveSpeed : maxMoveSpeedFloating;
+    if(speed > curretnMaxMoveSpeed)
+        velocity = velocity.normalized() * curretnMaxMoveSpeed;
     
     if(moveDir.x == 0 && moveDir.y == 0 && speed < 0.002)
         velocity = ofVec2f::zero();
@@ -107,8 +133,9 @@ void Player::update()
     level->wrapPosition(&pos);
     
     //Camera follow
-    cameraPos.x += pos.x - previousPos.x;
-    cameraPos.y += pos.y - previousPos.y;
+    cameraPos += pos - previousPos;
+    //    cameraPos.x += pos.x - previousPos.x;
+//    cameraPos.y += pos.y - previousPos.y;
     
     cameraPos += (pos - cameraPos) * cameraFollowSpeed;
 }
