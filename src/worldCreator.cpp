@@ -62,30 +62,34 @@ World *WorldCreator::createWorld(int locationInput)
     //World outline
     ofTexture outlineTexture = metaballGenerator->generate(worldSize, area, density);
     
-    //Surface
+    
+    //Outline
+    float randomTimeOutline = ofRandom(0, 1000);
+    
     frameBuffer.begin();
-        ofClear(255,255,255,0);
+    ofClear(255,255,255, 0);
     
-        if(!surfaceShader.isLoaded())
-            surfaceShader.load("surfaceShader");
+    if(!groundShader.isLoaded())
+        groundShader.load("outlineKamenShader");
     
-        surfaceShader.begin();
+    groundShader.begin();
     
-        surfaceShader.setUniformTexture("imageMask", outlineTexture, 0);
-        surfaceShader.setUniform3fv("randomColor", &surfaceColor[0]);
-
-        ofRect(0,0,worldSize.x, worldSize.y);
+    groundShader.setUniform1f("time", randomTimeOutline);
+    groundShader.setUniformTexture("imageMask", outlineTexture, 0);
+    groundShader.setUniform2f("worldSize", worldSize.x, worldSize.y);
     
-        surfaceShader.end();
+    ofRect(0,0, worldSize.x, worldSize.y);
+    
+    groundShader.end();
     frameBuffer.end();
     
-    ofImage imageSurface;
-    imageSurface.allocate(worldSize.x, worldSize.y, OF_IMAGE_COLOR_ALPHA);
+    ofImage imageOutline;
+    imageOutline.allocate(worldSize.x, worldSize.y, OF_IMAGE_COLOR_ALPHA);
     frameBuffer.readToPixels(pixels);
-    imageSurface.setFromPixels(pixels);
-
+    imageOutline.setFromPixels(pixels);
+    
     //Rocks
-    float sharpness = ofRandom(2.0f, 2.25f);
+    /*float sharpness = ofRandom(2.0f, 2.25f);
     float randomTime = ofRandom(0, 1000); ///Event very high time to pixelate 100000 and above
 
     float rockDensity = ofRandom(0, 0.12f);
@@ -111,19 +115,19 @@ World *WorldCreator::createWorld(int locationInput)
 
         groundShader.begin();
 
-        groundShader.setUniform1f("time", randomTime); //shader.setUniform1f("time", ofGetFrameNum() * 0.0005);
-        groundShader.setUniform1f("sharpness", sharpness);
-        groundShader.setUniform1f("density", rockDensity);
+            groundShader.setUniform1f("time", randomTime); //shader.setUniform1f("time", ofGetFrameNum() * 0.0005);
+            groundShader.setUniform1f("sharpness", sharpness);
+            groundShader.setUniform1f("density", rockDensity);
     
-        ///TODO blend between multiple colors
-        groundShader.setUniform3fv("randomColor", &groundColor[0]);
-        groundShader.setUniformTexture("imageMask", outlineTexture, 0);
+            ///TODO blend between multiple colors
+            groundShader.setUniform3fv("randomColor", &groundColor[0]);
+            groundShader.setUniformTexture("imageMask", outlineTexture, 0);
     
-        groundShader.setUniform2f("detailSize", rockDetailSize.x, rockDetailSize.y);
-        groundShader.setUniform2f("worldSize", worldSize.x, worldSize.y);
-        groundShader.setUniform2f("screenSize", screenSize.x, screenSize.y); //shader.setUniform1f("time", ofGetFrameNum() * 0.0005);
+            groundShader.setUniform2f("detailSize", rockDetailSize.x, rockDetailSize.y);
+            groundShader.setUniform2f("worldSize", worldSize.x, worldSize.y);
+            groundShader.setUniform2f("screenSize", screenSize.x, screenSize.y); //shader.setUniform1f("time", ofGetFrameNum() * 0.0005);
     
-        ofRect(0,0, worldSize.x, worldSize.y);
+            ofRect(0,0, worldSize.x, worldSize.y);
     
         groundShader.end();
     frameBuffer.end();
@@ -131,9 +135,38 @@ World *WorldCreator::createWorld(int locationInput)
     ofImage imageRocks;
     imageRocks.allocate(worldSize.x, worldSize.y, OF_IMAGE_COLOR_ALPHA);
     frameBuffer.readToPixels(pixels);
-    imageRocks.setFromPixels(pixels);
+    imageRocks.setFromPixels(pixels);*/
+
     
-    World *world = new World(imageRocks, imageSurface, location);
+    
+    //Surface
+    frameBuffer.begin();
+    ofClear(255,255,255,0);
+    
+    if(!surfaceShader.isLoaded())
+        surfaceShader.load("surfaceShader");
+    
+    surfaceShader.begin();
+    
+        surfaceShader.setUniformTexture("imageMask", outlineTexture, 0);
+        surfaceShader.setUniformTexture("imageRocks", imageOutline.getTextureReference(), 1);
+    
+        surfaceShader.setUniform3fv("randomColor", &surfaceColor[0]);
+    
+        ofRect(0,0,worldSize.x, worldSize.y);
+    
+    surfaceShader.end();
+    frameBuffer.end();
+    
+    ofImage imageSurface;
+    imageSurface.allocate(worldSize.x, worldSize.y, OF_IMAGE_COLOR_ALPHA);
+    frameBuffer.readToPixels(pixels);
+    imageSurface.setFromPixels(pixels);
+    
+    
+    
+//    World *world = new World(imageRocks, imageSurface, location);
+    World *world = new World(imageOutline, imageOutline, location);
     
     return world;
 }

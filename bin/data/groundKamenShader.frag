@@ -93,7 +93,7 @@ float fbm(vec2 P, int octaves, float lacunarity, float gain)
 
 float pattern2( in vec2 p, out vec2 q, out vec2 r , in float time)
 {
-    float l = 2.3;//5 for sand
+    float l = 2.3;//lacunarity, essential to rock formation, 5 for sand
     float g = 0.4;//0.4;
     int oc = 10;
     
@@ -115,9 +115,12 @@ void main()
     float result = pattern2(p,qq,r,time);
 
     vec2 w = vec2(gl_FragCoord.x, gl_FragCoord.y);
-    vec4 texel = texture(imageMask, w.xy); 
+    vec4 texel = texture(imageMask, w.xy);
     
-    vec4 c = vec4(randomColor.x, randomColor.y, randomColor.z, result * texel.z * sharpnees);
+    //float solidity = texel.z * (result * 4);
+
+    vec4 c = vec4(randomColor.x, randomColor.y, randomColor.z, result * sharpnees * texel.z);
+
 //    c *= 2.5;// * texel.x;//0.75;//(texel.x + 0.5f);
 //    c = texel;
 //    c = vec4(100, 0, 50, texel.x);

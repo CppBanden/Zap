@@ -21,6 +21,7 @@ ofTexture MetaballGenerator::generate(ofVec2f worldSize, float area, float densi
     
     float minSize = 0.002f; //float minSize = 0.001f;
     float maxSize = ofRandom(0.003f, 0.0035f); //float maxSize = 0.01f;
+
     float border = 0.17f;
 
     int metaBallCount = 100 * density;

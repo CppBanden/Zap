@@ -14,7 +14,9 @@ void main( void )
     float ratio = worldSize.y / worldSize.x;
     float divider = 25; //outter
     float intensity = 10; //inner
-
+    divider = 3;
+    intensity = 10;
+//    intensity = 5;
     float coordX = gl_FragCoord.x / worldSize.x;
     float coordY = gl_FragCoord.y / worldSize.x;
 
@@ -46,8 +48,8 @@ void main( void )
 
     sum = pow(sum / intensity, divider);
    
-    if(sum < 1)
-        sum = 0;
+//    if(sum < 1)
+  //      sum = 0;
     
     //Clamp
 /*    if(sum < 1 && sum > 0.1)

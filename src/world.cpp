@@ -9,7 +9,7 @@
 #include "world.h"
 
 ///TODO this setting should be somewhere else
-float World::zoom = 9; //35;//1.5f;
+float World::zoom = 12;//9; //35;//1.5f;
 
 World::World(ofImage rocks, ofImage surface, int locationInput)
 {
@@ -73,8 +73,8 @@ void World::draw(ofVec2f pos)
     ofSetColor(255);
     imageSurface.drawSubsection(0, 0, drawArea.x, drawArea.y, renderPos.x, renderPos.y, zoomSize.x, zoomSize.y);
     
-    ofSetColor(255);
-    imageRocks.drawSubsection(0, 0, drawArea.x, drawArea.y, renderPos.x, renderPos.y, zoomSize.x, zoomSize.y);
+    //ofSetColor(255);
+    //imageRocks.drawSubsection(0, 0, drawArea.x, drawArea.y, renderPos.x, renderPos.y, zoomSize.x, zoomSize.y);
 }
 
 void World::setPixel(int x, int y, ofColor color)

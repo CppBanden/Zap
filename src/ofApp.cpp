@@ -16,6 +16,8 @@ void ofApp::update()
     player->update();
 }
 
+///TODO brightness + contrast for world generatorz
+
 void ofApp::draw()
 {
     world->draw(player->cameraPos);
@@ -58,8 +60,8 @@ bool ofApp::travel(int destination)
     ofVec2f landingSpot = world->worldSize;
     landingSpot.x /= 2;
     landingSpot.y /= 2;
-    landingSpot.x = 450;
-    landingSpot.y = 900;
+//    landingSpot.x = 1045;
+  //  landingSpot.y = 255;
 
     player = new Player(world, input, landingSpot.x, landingSpot.y);
 }

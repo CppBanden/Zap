@@ -97,6 +97,8 @@
 		5B6273161AA37EFD006F32F9 /* surfaceShader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = surfaceShader.vert; sourceTree = "<group>"; };
 		5B6273171AA3D522006F32F9 /* spaceShader.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = spaceShader.frag; sourceTree = "<group>"; };
 		5B6273181AA3D522006F32F9 /* spaceShader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = spaceShader.vert; sourceTree = "<group>"; };
+		5B6850EB1AA53A390018E921 /* outlineKamenShader.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = outlineKamenShader.frag; sourceTree = "<group>"; };
+		5B6850EC1AA53A390018E921 /* outlineKamenShader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = outlineKamenShader.vert; sourceTree = "<group>"; };
 		5B75F9F51A8EC9270030EDB1 /* worldCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = worldCreator.cpp; sourceTree = "<group>"; };
 		5B75F9F61A8EC9270030EDB1 /* worldCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = worldCreator.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
@@ -164,6 +166,8 @@
 				5B6273161AA37EFD006F32F9 /* surfaceShader.vert */,
 				5B6273171AA3D522006F32F9 /* spaceShader.frag */,
 				5B6273181AA3D522006F32F9 /* spaceShader.vert */,
+				5B6850EB1AA53A390018E921 /* outlineKamenShader.frag */,
+				5B6850EC1AA53A390018E921 /* outlineKamenShader.vert */,
 				5B20D4261A9AA2D400747164 /* testShader.frag */,
 				5B20D4271A9AA2D400747164 /* testShader.vert */,
 				5B03F9131A86ED1800FE40E9 /* cave.png */,
