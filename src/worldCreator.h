@@ -18,6 +18,7 @@
 class WorldCreator
 {
 public:
+    ofShader outlineShader;
     ofShader groundShader;
     ofShader surfaceShader;
     
@@ -29,7 +30,7 @@ public:
     void showShader(int locationInput);
     ofVec3f getRandomColor();
 
-    static const int defaultLocation = 554100416; //993632448; //576686720;
+    static const int defaultLocation = 162557792; //554100416; //840460480; //993632448; //576686720;
 };
 
 #endif /* defined(__Sap__worldCreator__) */

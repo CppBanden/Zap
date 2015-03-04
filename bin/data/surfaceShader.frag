@@ -12,7 +12,12 @@ void main()
     vec4 texel = texture(imageMask, w.xy);
     vec4 texelRocks = texture(imageRocks, w.xy);
     
-    vec4 c = vec4(randomColor.xyz, texel.x);
+    float alpha = 1;
+    
+    if(texel.w < 0.001f)
+        alpha = 0;
 
+    vec4 c = vec4(randomColor.xyz * texel.w, alpha);
+    
     outputColor = c;
 }

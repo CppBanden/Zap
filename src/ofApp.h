@@ -11,7 +11,7 @@ class ofApp : public ofBaseApp
 {
 public:
     bool showEdge = false;
-
+    
     void setup();
     void update();
     void draw();

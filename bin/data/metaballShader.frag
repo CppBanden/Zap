@@ -14,8 +14,8 @@ void main( void )
     float ratio = worldSize.y / worldSize.x;
     float divider = 25; //outter
     float intensity = 10; //inner
-    divider = 3;
-    intensity = 10;
+    divider = 6;
+    intensity = 8;
 //    intensity = 5;
     float coordX = gl_FragCoord.x / worldSize.x;
     float coordY = gl_FragCoord.y / worldSize.x;

@@ -52,7 +52,7 @@ void Player::update()
         if(fuel > 0 && (moveDir.x != 0 || moveDir.y != 0))
         {
             velocity += moveDir * moveSpeed;
-            fuel -= fuelDrainMove;
+            useFuel(fuelDrainMove);
         }
         
         //Friction
@@ -73,8 +73,7 @@ void Player::update()
                 control = 0.1f + 0.9f * alignment;
             
             velocity += moveDir * moveSpeedFloating * control;
-            
-            fuel -= fuelDrainMoveFloating;
+            useFuel(fuelDrainMoveFloating);
         }
     }
     
@@ -85,7 +84,7 @@ void Player::update()
     if(currentAlpha > 0.1f)
     {
         velocity -= velocity * wallFriction * currentAlpha;
-        fuel -= fuelDrainDig * currentAlpha;
+        useFuel(fuelDrainDig * currentAlpha);
     }
     
     ///TODO dig ahead of player instead of current pixel
@@ -176,6 +175,14 @@ void Player::draw()
     ofFill();
     float remainingFuel =  160 * (fuel / 100);
     ofDrawPlane(10 + remainingFuel / 2, 45, remainingFuel, 15);
+}
+
+void Player::useFuel(float amount)
+{
+    if(infiniteFuel)
+        return;
+    
+    fuel -= amount;
 }
 
 std::string Player::getDebugPos()

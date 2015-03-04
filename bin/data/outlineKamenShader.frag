@@ -126,6 +126,10 @@ void main()
         sum = 1;*/
     
     vec4 c = vec4(1, 1, 1, sum);
-
+    
+//    c = texel;
+    
     outputColor = c;
 }
+
+

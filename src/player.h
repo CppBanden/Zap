@@ -23,7 +23,8 @@ public:
     ofVec2f cameraPos;
     ofVec2f velocity;
     ofImage image;
-
+    bool infiniteFuel = true;
+    
     Input *input;
     World *level;
     
@@ -35,7 +36,7 @@ public:
     float maxMoveSpeed = 0.5f;
     float friction = 0.0035f; //0
     float fuelDrainMove = 0.0006f;
-    float fuelDrainDig = 0;//0.35f;
+    float fuelDrainDig = 0.35f;
     
     //Floating Velocity
     float moveSpeedFloating = 0.008;
@@ -44,7 +45,7 @@ public:
     float fuelDrainMoveFloating = 0.0003f;
     
     //Digging
-    float wallFriction = 0; //0.5f;
+    float wallFriction = 0.5f;
     float digSpeed = 0.05f;
     float digSpeedEdge = 0.005f;
     
@@ -60,6 +61,7 @@ public:
 
     void draw();
     void update();
+    void useFuel(float amount);
     
     std::string getDebugPos();
 };

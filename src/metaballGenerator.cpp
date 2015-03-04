@@ -22,15 +22,15 @@ ofTexture MetaballGenerator::generate(ofVec2f worldSize, float area, float densi
     float minSize = 0.002f; //float minSize = 0.001f;
     float maxSize = ofRandom(0.003f, 0.0035f); //float maxSize = 0.01f;
 
-    float border = 0.17f;
-
+    float border = worldSize.x / 5;
+    
     int metaBallCount = 100 * density;
     ofVec3f metaballs[100];
     
     for(int i = 0; i < metaBallCount; ++i)
     {
-        float x = ofRandom(border, 1-border);
-        float y = ofRandom(border, 1-border);
+        float x = ofRandom(border, worldSize.x - border) / worldSize.x;
+        float y = ofRandom(border, worldSize.y - border) / worldSize.y;
         float size = ofRandom(minSize, maxSize);
         metaballs[i] = ofVec3f( x, y, size);
     }

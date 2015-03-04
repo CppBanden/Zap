@@ -60,8 +60,8 @@ bool ofApp::travel(int destination)
     ofVec2f landingSpot = world->worldSize;
     landingSpot.x /= 2;
     landingSpot.y /= 2;
-//    landingSpot.x = 1045;
-  //  landingSpot.y = 255;
+    landingSpot.x = 460;
+    landingSpot.y = 460;
 
     player = new Player(world, input, landingSpot.x, landingSpot.y);
 }
