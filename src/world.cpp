@@ -11,7 +11,7 @@
 ///TODO this setting should be somewhere else
 float World::zoom = 35;//9; //35;//1.5f;
 
-World::World(ofImage rocks, ofImage surface, int locationInput)
+World::World(ofImage rocks, ofImage surface, ofImage space, int locationInput)
 {
     location = locationInput;
     
@@ -23,12 +23,27 @@ World::World(ofImage rocks, ofImage surface, int locationInput)
     imageSurface = surface;
     setupImage(&imageSurface);
     
+    imageSpace = space;
+    setupImage(&imageSpace);
+    
     ofEnableArbTex();
     
     setZoom(World::zoom);
     
     worldSize.x = imageRocks.getWidth();
     worldSize.y = imageRocks.getHeight();
+    
+    
+    ofDisableArbTex();
+    
+    frameBuffer.allocate(worldSize.x, worldSize.y, GL_RGBA);
+    
+    ofTexture frameBufferTexture = frameBuffer.getTextureReference();
+    frameBufferTexture.setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
+    frameBufferTexture.setTextureWrap(GL_REPEAT,GL_REPEAT);
+    
+    ofEnableArbTex();
+
 }
 
 void World::setupImage(ofImage *image)
@@ -44,12 +59,8 @@ void World::draw(ofVec2f pos)
     ///TODO Center level when ratio does not fit perfectly
     
     ///TODO Cap width in relation to max height to support super wide window
-    
+
     ofVec2f screenSize = Settings::getScreenSize();
-
-    //ofSetColor(10, 10, 10);
-    //ofRect(0, 0, screenSize.x, screenSize.y);
-
 
     float ratio = (screenSize.x / zoomSize.x);
     drawArea.x = screenSize.x;
@@ -58,23 +69,30 @@ void World::draw(ofVec2f pos)
     ofVec2f renderPos;
     renderPos.x = pos.x - (drawArea.x / 2) / ratio;
     renderPos.y = pos.y - (drawArea.y / 2) / ratio;
-
-    
-    if(!spaceShader.isLoaded())
-        spaceShader.load("spaceShader");
-    
-    spaceShader.begin();
-    
-        spaceShader.setUniform2f("worldSize", zoomSize.x, zoomSize.y);
-        ofRect(0, 0, screenSize.x, screenSize.y);
-    
-    spaceShader.end();
     
     ofSetColor(255);
+    
+    imageSpace.drawSubsection(0, 0, drawArea.x, drawArea.y, renderPos.x, renderPos.y, zoomSize.x, zoomSize.y);
+    
     imageSurface.drawSubsection(0, 0, drawArea.x, drawArea.y, renderPos.x, renderPos.y, zoomSize.x, zoomSize.y);
-    
-    ofSetColor(255);
+
     imageRocks.drawSubsection(0, 0, drawArea.x, drawArea.y, renderPos.x, renderPos.y, zoomSize.x, zoomSize.y);
+    
+    
+    //Experimenting with objects
+    
+    /*frameBuffer.begin();
+    
+        ofClear(255,255,255,0);
+
+        ofSetColor(255, 129, 0);
+        ofCircle(170, 170, 120);
+    
+        ofSetColor(150, 150, 150);
+        ofRect(600, 600, 60, 30);
+    frameBuffer.end();
+    
+    frameBuffer.getTextureReference().drawSubsection(0, 0, drawArea.x, drawArea.y, renderPos.x, renderPos.y, zoomSize.x, zoomSize.y);*/
 }
 
 void World::setPixel(int x, int y, ofColor color)

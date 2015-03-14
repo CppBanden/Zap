@@ -16,8 +16,9 @@ void main()
     
     if(texel.w < 0.001f)
         alpha = 0;
-
-    vec4 c = vec4(randomColor.xyz * texel.w, alpha);
     
+    vec4 c = vec4(randomColor.xyz, texel.w);
+//    vec4 c = vec4(randomColor.xyz, texel.w);
+//    c = texel;
     outputColor = c;
 }

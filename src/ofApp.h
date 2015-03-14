@@ -6,12 +6,16 @@
 #include "world.h"
 #include "settings.h"
 #include "worldCreator.h"
+#include "map.h"
+#include "mapWorld.h"
+#include "location.h"
 
 class ofApp : public ofBaseApp
 {
 public:
-    bool showEdge = false;
+    enum State{Explore, MapOverview};
     
+    State state;
     void setup();
     void update();
     void draw();
@@ -25,10 +29,13 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-    bool travel(int location);
+    
+    bool travel();
+    bool travel(Location location);    
     
     Input *input;
     World *world;
     Player *player;
+    Map *map;
     WorldCreator *worldCreator;
 };

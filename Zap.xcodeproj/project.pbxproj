@@ -12,6 +12,10 @@
 		5B2445F21A90CE36001C453B /* metaballGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B2445F01A90CE36001C453B /* metaballGenerator.cpp */; };
 		5B35BA8B1A89895700CE15E4 /* settings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B35BA891A89895700CE15E4 /* settings.cpp */; };
 		5B75F9F71A8EC9270030EDB1 /* worldCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B75F9F51A8EC9270030EDB1 /* worldCreator.cpp */; };
+		5B8894991AACBFBA00A7FB2B /* map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B8894971AACBFBA00A7FB2B /* map.cpp */; };
+		5B88949C1AACD45800A7FB2B /* mapWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B88949A1AACD45800A7FB2B /* mapWorld.cpp */; };
+		5B88949F1AAD16B700A7FB2B /* location.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B88949D1AAD16B700A7FB2B /* location.cpp */; };
+		5B8894A21AB2423B00A7FB2B /* mapSegment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B8894A01AB2423B00A7FB2B /* mapSegment.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -101,6 +105,14 @@
 		5B6850EC1AA53A390018E921 /* outlineKamenShader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = outlineKamenShader.vert; sourceTree = "<group>"; };
 		5B75F9F51A8EC9270030EDB1 /* worldCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = worldCreator.cpp; sourceTree = "<group>"; };
 		5B75F9F61A8EC9270030EDB1 /* worldCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = worldCreator.h; sourceTree = "<group>"; };
+		5B8894971AACBFBA00A7FB2B /* map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = map.cpp; sourceTree = "<group>"; };
+		5B8894981AACBFBA00A7FB2B /* map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = map.h; sourceTree = "<group>"; };
+		5B88949A1AACD45800A7FB2B /* mapWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mapWorld.cpp; sourceTree = "<group>"; };
+		5B88949B1AACD45800A7FB2B /* mapWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mapWorld.h; sourceTree = "<group>"; };
+		5B88949D1AAD16B700A7FB2B /* location.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = location.cpp; sourceTree = "<group>"; };
+		5B88949E1AAD16B700A7FB2B /* location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = location.h; sourceTree = "<group>"; };
+		5B8894A01AB2423B00A7FB2B /* mapSegment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mapSegment.cpp; sourceTree = "<group>"; };
+		5B8894A11AB2423B00A7FB2B /* mapSegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mapSegment.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -285,8 +297,16 @@
 				5B35BA8A1A89895700CE15E4 /* settings.h */,
 				5B75F9F51A8EC9270030EDB1 /* worldCreator.cpp */,
 				5B75F9F61A8EC9270030EDB1 /* worldCreator.h */,
+				5B88949A1AACD45800A7FB2B /* mapWorld.cpp */,
+				5B88949B1AACD45800A7FB2B /* mapWorld.h */,
 				5B2445F01A90CE36001C453B /* metaballGenerator.cpp */,
 				5B2445F11A90CE36001C453B /* metaballGenerator.h */,
+				5B8894971AACBFBA00A7FB2B /* map.cpp */,
+				5B8894981AACBFBA00A7FB2B /* map.h */,
+				5B88949D1AAD16B700A7FB2B /* location.cpp */,
+				5B88949E1AAD16B700A7FB2B /* location.h */,
+				5B8894A01AB2423B00A7FB2B /* mapSegment.cpp */,
+				5B8894A11AB2423B00A7FB2B /* mapSegment.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -391,9 +411,13 @@
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				5B03F90E1A86979E00FE40E9 /* world.cpp in Sources */,
 				5B2445F21A90CE36001C453B /* metaballGenerator.cpp in Sources */,
+				5B88949F1AAD16B700A7FB2B /* location.cpp in Sources */,
 				5B75F9F71A8EC9270030EDB1 /* worldCreator.cpp in Sources */,
 				5B35BA8B1A89895700CE15E4 /* settings.cpp in Sources */,
+				5B8894A21AB2423B00A7FB2B /* mapSegment.cpp in Sources */,
+				5B8894991AACBFBA00A7FB2B /* map.cpp in Sources */,
 				5B03F9091A86965C00FE40E9 /* player.cpp in Sources */,
+				5B88949C1AACD45800A7FB2B /* mapWorld.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

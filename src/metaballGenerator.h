@@ -19,7 +19,7 @@ public:
     ofShader metaballShader;
     
     MetaballGenerator();
-    ofTexture generate(ofVec2f worldSizem, float area, float density);
+    ofTexture generate(ofVec2f worldSizem, float density);
 };
 
 #endif /* defined(__Sap__metaBallGenerator__) */

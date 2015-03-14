@@ -14,7 +14,7 @@ MetaballGenerator::MetaballGenerator()
 
 }
 
-ofTexture MetaballGenerator::generate(ofVec2f worldSize, float area, float density)
+ofTexture MetaballGenerator::generate(ofVec2f worldSize, float density)
 {
     if(!metaballShader.isLoaded())
         metaballShader.load("metaballShader");
@@ -41,6 +41,7 @@ ofTexture MetaballGenerator::generate(ofVec2f worldSize, float area, float densi
     fbo.setDefaultTextureIndex(0);
     fbo.begin();
     
+        ofFill();
         ofClear(255,255,255, 0);
         ofSetColor(0);
         ofRect(0,0,worldSize.x, worldSize.y);

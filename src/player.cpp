@@ -161,6 +161,7 @@ void Player::draw()
         drawPos.y = (level->drawArea.y - size) / 2;
         drawPos.y += (pos.y - cameraPos.y) * ratio;
         
+        ofSetColor(255);
         image.drawSubsection(drawPos.x, drawPos.y, size, size, 3 * currentFrame, 0, 3, 3);
     }
 

@@ -5,10 +5,16 @@ void ofApp::setup()
     ofSetFrameRate(Settings::frameRate);
 
     input = new Input();
-    
+
     worldCreator = new WorldCreator();
 
-    travel(WorldCreator::defaultLocation);
+    Location startLocation(100, 50);
+
+    travel(startLocation);
+
+    map = new Map(startLocation, input);
+    
+    state = MapOverview;
 }
 
 void ofApp::update()
@@ -20,39 +26,44 @@ void ofApp::update()
 
 void ofApp::draw()
 {
-    world->draw(player->cameraPos);
-    
-    player->draw();
-    
-    //Debug outline
-/*    if(false)
+    if(state == Explore)
     {
-        ofVec2f screenSize = Settings::getScreenSize();
-        ofNoFill();
-        //ofRect(0, 0, WorldCreator::worldWidth, WorldCreator::worldHeight);
-        ofRect(screenSize.x / 2 - WorldCreator::worldWidth / 2, screenSize.y / 2 - WorldCreator::worldHeight / 2, WorldCreator::worldWidth, WorldCreator::worldHeight);
-    }*/
+        world->draw(player->cameraPos);
+        
+        player->draw();
+        
+        //Debug info
+        if(true)
+        {
+            ofDrawBitmapStringHighlight(player->getDebugPos(), 15, 80);
+            //printf("bright %f \n", level->getPixel(player->pos.x, player->pos.y).getBrightness() / 255);
+            
+            ofSetColor(world->getRockPixel(player->pos.x, player->pos.y));
+            ofFill();
+            ofDrawPlane(82, 115, 140, 20);
+        }
+    }
+    else if(state == MapOverview)
+    {
+        map->draw();
+    }
     
     //Location GUI
     std::ostringstream s;
     s << "Location :" << world->location;
     ofDrawBitmapStringHighlight(s.str(), 15, 20);
-    
-    //Debug info
-    if(true)
-    {
-        ofDrawBitmapStringHighlight(player->getDebugPos(), 15, 80);
-        //printf("bright %f \n", level->getPixel(player->pos.x, player->pos.y).getBrightness() / 255);
-
-        ofSetColor(world->getRockPixel(player->pos.x, player->pos.y));
-        ofFill();
-        ofDrawPlane(82, 115, 140, 20);
-    }
 }
 
-bool ofApp::travel(int destination)
+bool ofApp::travel()
 {
-    world = worldCreator->createWorld(destination);
+
+}
+
+bool ofApp::travel(Location location)
+{
+    int locationValue = location.value();
+    
+    world = worldCreator->createWorld(locationValue);
     
 //    ofVec2f levelSize = WorldCreator::getWorldSize();
     
@@ -60,8 +71,8 @@ bool ofApp::travel(int destination)
     ofVec2f landingSpot = world->worldSize;
     landingSpot.x /= 2;
     landingSpot.y /= 2;
-    landingSpot.x = 460;
-    landingSpot.y = 460;
+//    landingSpot.x = 460;
+  //  landingSpot.y = 460;
 
     player = new Player(world, input, landingSpot.x, landingSpot.y);
 }
@@ -80,15 +91,21 @@ void ofApp::keyPressed(int key)
 
     if(key == 'o')
     {
-        travel(0);
-    }
-    else if(key == 'p')
-    {
-        travel(world->location + 1);
+        travel();
     }
     
-    if(key == 'i')
-        showEdge = !showEdge;
+    
+    if(key == 'm')
+    {
+        if(state == Explore)
+        {
+            state = MapOverview;
+        }
+        else if(state == MapOverview)
+        {
+            state = Explore;
+        }
+    }
     
     if(key == '1')
         world->setZoom(1.5); //Current expected default zoom
@@ -102,7 +119,7 @@ void ofApp::keyPressed(int key)
         world->setZoom(world->zoom - 2);
     else if(key == '0')
         world->setZoom(35); //Really far away
-    
+
     ///TODO should shoul entire level
 }
 
@@ -120,8 +137,10 @@ void ofApp::keyReleased(int key)
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
+void ofApp::mouseMoved(int x, int y )
+{
+    input->mouseX = x;
+    input->mouseY = y;
 }
 
 //--------------------------------------------------------------
@@ -135,8 +154,19 @@ void ofApp::mousePressed(int x, int y, int button){
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-    
+void ofApp::mouseReleased(int x, int y, int button)
+{
+    if(state == MapOverview)
+    {
+        MapWorld *selectedMapWorld = map->getSelectedMapWorld();
+        
+        if(selectedMapWorld != NULL)
+        {
+            state = Explore;
+            world->setZoom(35); //Really far away
+            travel(selectedMapWorld->location);
+        }
+    }
 }
 
 //--------------------------------------------------------------

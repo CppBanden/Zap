@@ -20,14 +20,17 @@ public:
     
     ofImage imageRocks;
     ofImage imageSurface;
+    ofImage imageSpace;
     ofShader spaceShader;
     ofVec2f worldSize;
     ofVec2f zoomSize;
     ofVec2f drawArea;
     
+    ofFbo frameBuffer;
+    
     int location;
 
-    World(ofImage rocks, ofImage surface, int locationInput);
+    World(ofImage rocks, ofImage surface, ofImage space, int locationInput);
     
     void setupImage(ofImage *image);
     void draw(ofVec2f pos);
