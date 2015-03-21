@@ -15,3 +15,12 @@ MapWorld::MapWorld(ofColor colorInput, float areaFractionInput, ofVec2f offsetIn
     offset = offsetInput;
     location = locationInput;
 }
+
+MapWorld::MapWorld(ofColor colorInput, float areaFractionInput, ofVec2f offsetInput, Location locationInput, vector<Item> itemsInput)
+{
+    areaFraction = areaFractionInput;
+    color = colorInput;
+    offset = offsetInput;
+    location = locationInput;
+    items = itemsInput;
+}

@@ -9,11 +9,12 @@
 #include "map.h"
 #include "mapWorld.h"
 #include "location.h"
+#include "universeMap.h"
 
 class ofApp : public ofBaseApp
 {
 public:
-    enum State{Explore, MapOverview};
+    enum State{Explore, MapOverview, UniverseOverview};
     
     State state;
     void setup();
@@ -30,6 +31,10 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
+    void setExploreState();
+    void setMapOverviewState();
+    void setUniverseOverviewState();
+    
     bool travel();
     bool travel(Location location);    
     
@@ -37,5 +42,7 @@ public:
     World *world;
     Player *player;
     Map *map;
+    UniverseMap *universeMap;
+    
     WorldCreator *worldCreator;
 };

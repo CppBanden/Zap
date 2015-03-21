@@ -10,10 +10,10 @@
 #include "ofApp.h"
 #include "player.h"
 
-Player::Player(World *l, Input *i, int x, int y)
+Player::Player(World *level, Input *input, int x, int y)
 {
-    level = l;
-    input = i;
+    this->level = level;
+    this->input = input;
     
     pos.x = x;
     pos.y = y;
@@ -143,7 +143,6 @@ void Player::draw()
 {
     ofVec2f screenSize = Settings::getScreenSize();
 
-    ///TODO smooth camera follow
     //ofDrawPlane(pos.x, pos.y, 10, 10);
     
     if(fuel > 0)
@@ -178,11 +177,31 @@ void Player::draw()
     ofDrawPlane(10 + remainingFuel / 2, 45, remainingFuel, 15);
 }
 
+void Player::drawMap()
+{
+    ofVec2f screenSize = Settings::getScreenSize();
+    
+    if(fuel > 0)
+    {
+        float ratio = (screenSize.x / level->zoomSize.x);
+        
+        ofVec2f drawPos;
+        drawPos.x = (level->drawArea.x - size) / 2;
+        drawPos.x += (pos.x - cameraPos.x) * ratio;
+        
+        drawPos.y = (level->drawArea.y - size) / 2;
+        drawPos.y += (pos.y - cameraPos.y) * ratio;
+        
+        ofSetColor(255);
+        image.drawSubsection(drawPos.x, drawPos.y, size, size, 0, 0, 3, 3);
+    }
+}
+
 void Player::useFuel(float amount)
 {
     if(infiniteFuel)
         return;
-    
+
     fuel -= amount;
 }
 

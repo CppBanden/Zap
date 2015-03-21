@@ -12,6 +12,8 @@
 #include <stdio.h>
 #include "ofMain.h"
 #include "settings.h"
+#include "item.h"
+#include <vector>
 
 class World
 {
@@ -25,7 +27,7 @@ public:
     ofVec2f worldSize;
     ofVec2f zoomSize;
     ofVec2f drawArea;
-    
+    vector<Item> items;
     ofFbo frameBuffer;
     
     int location;

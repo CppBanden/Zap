@@ -24,18 +24,24 @@ public:
     
     int width = 3;
     int height = 3;
-    
     int segmentWidth = 3;
     int segmentHeight = 3;
+    int currentSegmentX;
+    int currentSegmentY;
+    ofImage playerIcon;
+    Location currentLocation;
     
     Input *input;
     MapSegment *mapSegments[9];
-    
     MapWorld *selectedMapWorld;
+    MapWorld *currentMapWorld;
     
     Map(Location location, Input *input);
     
+    void move();
+    void move(Location location);
     void draw();
     MapWorld *getSelectedMapWorld();
 };
+
 #endif /* defined(__Zap__map__) */

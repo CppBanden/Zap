@@ -23,7 +23,7 @@ public:
     ofVec2f cameraPos;
     ofVec2f velocity;
     ofImage image;
-    bool infiniteFuel = true;
+    bool infiniteFuel = false;
     
     Input *input;
     World *level;
@@ -60,6 +60,7 @@ public:
     Player(World *w, Input *i, int x, int y);
 
     void draw();
+    void drawMap();
     void update();
     void useFuel(float amount);
     

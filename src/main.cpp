@@ -8,13 +8,18 @@ int main( )
 {
     ofSetCurrentRenderer(ofGLProgrammableRenderer::TYPE);
     
-    if(Settings::fullScreen)
+    bool fullScreen = false;
+    int defaultScreenWidth = 800;//1600;
+    int defaultScreenHeight = 450;//900;
+    
+    if(fullScreen)
     {
         ofSetupOpenGL(800, 600, OF_FULLSCREEN);
     }
     else
     {
-        ofSetupOpenGL(Settings::defaultScreenWidth, Settings::defaultScreenHeight, OF_WINDOW);
+        ofSetupOpenGL(defaultScreenWidth, defaultScreenHeight, OF_WINDOW);
+        //ofSetupOpenGL(Settings::defaultScreenWidth, Settings::defaultScreenHeight, OF_WINDOW);
     }
     
     ofRunApp(new ofApp());

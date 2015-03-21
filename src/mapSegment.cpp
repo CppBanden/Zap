@@ -16,25 +16,10 @@ MapSegment::MapSegment(Location locationInput, MapWorld **selectedMapWorld)
     {
         for(int x = 0; x < width; ++x)
         {
-//            int locationValue = Location::getValue(locationInput.x + x, locationInput.y + y);
             Location newLocation(locationInput.x + x, locationInput.y + y);
             mapWorlds[y * height + x] = WorldCreator::createMapWorld(newLocation);
-            
-            /*ofSeedRandom(locationValue);
-            
-            ofVec3f randomColor = WorldCreator::getRandomColor() * 255;
-            
-            ofColor groundColor(randomColor.x, randomColor.y, randomColor.z);
-            
-            ofVec2f size = WorldCreator::generateWorldSize();
-            float area = size.x * size.y;
-            
-            ofVec2f offset(ofRandom(0, 1), ofRandom(0, 1));
-            
-            mapWorlds[y * height + x] = new MapWorld(groundColor, area, offset);*/
         }
     }
-    
 }
 
 void MapSegment::draw(int drawX, int drawY, int drawWidth, int drawHeight)
@@ -52,11 +37,9 @@ void MapSegment::draw(int drawX, int drawY, int drawWidth, int drawHeight)
             int posX = drawX + drawWidth * offset.x;
             int posY = drawY + drawHeight * offset.y;
             
-            ///TODO make releative to drawWidth
-            
-            float size = (mw->areaFraction / 500000) * (drawWidth / 100);
-            
+            float size = (mw->areaFraction / 700000) * (drawWidth / 100);
             size = CLAMP(size, 6, 100);
+   
             
             //Hover check
             if(*selectedMapWorld == NULL)
@@ -71,6 +54,14 @@ void MapSegment::draw(int drawX, int drawY, int drawWidth, int drawHeight)
             
             ofSetColor(mw->color);
             ofCircle(posX, posY, size);
+            
+            
+            //TEMP item
+            if(mw->items.size() > 0)
+            {
+                ofSetColor(255);
+                ofCircle(posX, posY, size / 3);
+            }
         }
     }
 }

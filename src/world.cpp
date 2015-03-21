@@ -44,6 +44,24 @@ World::World(ofImage rocks, ofImage surface, ofImage space, int locationInput)
     
     ofEnableArbTex();
 
+    //Item experiment
+    /*ofColor fuelColor(150);
+    int fuelCount = ofRandom(100, 200);
+    cout << "fuelCount" << fuelCount << "\n";
+    for(int i = 0; i < fuelCount; ++i)
+    {
+        Item newItem(ofRandom(0, worldSize.x), ofRandom(0, worldSize.y), fuelColor);
+        items.push_back(newItem);
+    }
+    
+    ofColor megaFuelColor(255, 129, 0);
+    int megaFuelCount = ofRandom(5, 10);
+    cout << "megaFuelCount" << megaFuelCount << "\n";
+    for(int i = 0; i < megaFuelCount; ++i)
+    {
+        Item newItem(ofRandom(0, worldSize.x), ofRandom(0, worldSize.y), megaFuelColor);
+        items.push_back(newItem);
+    }*/
 }
 
 void World::setupImage(ofImage *image)
@@ -72,7 +90,8 @@ void World::draw(ofVec2f pos)
     
     ofSetColor(255);
     
-    imageSpace.drawSubsection(0, 0, drawArea.x, drawArea.y, renderPos.x, renderPos.y, zoomSize.x, zoomSize.y);
+//    imageSpace.drawSubsection(0, 0, drawArea.x, drawArea.y, renderPos.x, renderPos.y, zoomSize.x, zoomSize.y);
+    ofBackground(0);
     
     imageSurface.drawSubsection(0, 0, drawArea.x, drawArea.y, renderPos.x, renderPos.y, zoomSize.x, zoomSize.y);
 
@@ -81,18 +100,29 @@ void World::draw(ofVec2f pos)
     
     //Experimenting with objects
     
-    /*frameBuffer.begin();
-    
+    frameBuffer.begin();
         ofClear(255,255,255,0);
-
-        ofSetColor(255, 129, 0);
-        ofCircle(170, 170, 120);
     
-        ofSetColor(150, 150, 150);
-        ofRect(600, 600, 60, 30);
+        for(int i = 0, size = items.size(); i < size; ++i)
+        {
+            Item item = items[i];
+            
+            if(item.x > renderPos.x && item.x < renderPos.x + zoomSize.x && item.y > renderPos.y && item.y < renderPos.y + zoomSize.y)
+            {
+                ofSetColor(item.color);
+                ofRect(item.x, item.y, 2, 2);
+            }
+        }
+    
+//        ofSetColor(255, 129, 0);
+  //      ofCircle(170, 170, 120);
+    
+    //    ofSetColor(150, 150, 150);
+      //  ofRect(600, 600, 60, 30);
     frameBuffer.end();
     
-    frameBuffer.getTextureReference().drawSubsection(0, 0, drawArea.x, drawArea.y, renderPos.x, renderPos.y, zoomSize.x, zoomSize.y);*/
+    ofSetColor(255);
+    frameBuffer.getTextureReference().drawSubsection(0, 0, drawArea.x, drawArea.y, renderPos.x, renderPos.y, zoomSize.x, zoomSize.y);
 }
 
 void World::setPixel(int x, int y, ofColor color)

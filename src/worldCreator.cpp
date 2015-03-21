@@ -22,10 +22,12 @@ MapWorld *WorldCreator::createMapWorld(Location locationInput)
     
     ofVec2f size = generateWorldSize();
     float area = size.x * size.y;
-    
+
     ofVec2f offset(ofRandom(0, 1), ofRandom(0, 1));
     
-    return new MapWorld(groundColor, area, offset, locationInput);
+    vector<Item> newItems = generateItems();
+    
+    return new MapWorld(groundColor, area, offset, locationInput, newItems);
 }
 
 World *WorldCreator::createWorld(int locationInput)
@@ -218,4 +220,17 @@ ofVec3f WorldCreator::getRandomColor()
     
     ofVec3f randomColor(ofRandom(1),ofRandom(1),ofRandom(1));
     return randomColor;
+}
+
+vector<Item> WorldCreator::generateItems()
+{
+    vector<Item> newItems;
+    
+    if(ofRandomuf() > 0.8f)
+    {
+        Item newItem(ofRandom(0, 1), ofRandom(0, 1), ofColor(200, 150, 0));
+        newItems.push_back(newItem);
+    }
+    
+    return newItems;
 }

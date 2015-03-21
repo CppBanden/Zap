@@ -18,8 +18,8 @@ public:
     
     static const bool fullScreen = false;
     
-    static const int defaultScreenWidth = 800; //1200;
-    static const int defaultScreenHeight = 800; //700;
+    static const int defaultScreenWidth = 700; //1200;
+    static const int defaultScreenHeight = 700; //700;
     
     static const int frameRate = 60;
     

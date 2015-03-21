@@ -16,6 +16,8 @@ struct Input
     bool upPressed;
     bool downPressed;
     
+    bool button1Pressed;
+    
     int mouseX;
     int mouseY;
     

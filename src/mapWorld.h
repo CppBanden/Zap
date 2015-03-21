@@ -12,6 +12,8 @@
 #include <stdio.h>
 #include "ofMain.h"
 #include "location.h"
+#include "item.h"
+#include <vector>
 
 class MapWorld
 {
@@ -20,8 +22,10 @@ public:
     ofColor color;
     ofVec2f offset;
     Location location;
+    vector<Item> items;
     
     MapWorld(ofColor colorInput, float areaFractionInput, ofVec2f offsetInput, Location locationInput);
+    MapWorld(ofColor colorInput, float areaFractionInput, ofVec2f offsetInput, Location locationInput, vector<Item> items);
 };
 
 #endif /* defined(__Zap__mapWorld__) */

@@ -5,21 +5,41 @@ void ofApp::setup()
     ofSetFrameRate(Settings::frameRate);
 
     input = new Input();
-
     worldCreator = new WorldCreator();
 
-    Location startLocation(100, 50);
+    Location startLocation(2564,1094);
 
     travel(startLocation);
 
     map = new Map(startLocation, input);
+    universeMap = new UniverseMap();
     
+    setMapOverviewState();
+}
+
+void ofApp::setExploreState()
+{
+    travel(map->currentLocation);
+    
+    state = Explore;
+}
+
+void ofApp::setMapOverviewState()
+{
     state = MapOverview;
+}
+
+void ofApp::setUniverseOverviewState()
+{
+    state = UniverseOverview;
 }
 
 void ofApp::update()
 {
-    player->update();
+   if(state == Explore)
+   {
+       player->update();
+   }
 }
 
 ///TODO brightness + contrast for world generatorz
@@ -46,11 +66,17 @@ void ofApp::draw()
     else if(state == MapOverview)
     {
         map->draw();
+        
+        player->drawMap();
+    }
+    else if(state == UniverseOverview)
+    {
+        universeMap->draw(map->currentLocation);
     }
     
     //Location GUI
     std::ostringstream s;
-    s << "Location :" << world->location;
+    s << "Location " << map->currentLocation.x << "," << map->currentLocation.y;
     ofDrawBitmapStringHighlight(s.str(), 15, 20);
 }
 
@@ -65,9 +91,8 @@ bool ofApp::travel(Location location)
     
     world = worldCreator->createWorld(locationValue);
     
-//    ofVec2f levelSize = WorldCreator::getWorldSize();
-    
-//    player = new Player(level, input, levelSize.x / 2, levelSize.y / 2);
+    //ofVec2f levelSize = WorldCreator::getWorldSize();
+    //player = new Player(level, input, levelSize.x / 2, levelSize.y / 2);
     ofVec2f landingSpot = world->worldSize;
     landingSpot.x /= 2;
     landingSpot.y /= 2;
@@ -89,21 +114,35 @@ void ofApp::keyPressed(int key)
     else if(key == 's' || key == OF_KEY_DOWN)
         input->downPressed = true;
 
+    if(key == 'e')
+        input->button1Pressed = true;
+    
     if(key == 'o')
     {
         travel();
     }
     
-    
     if(key == 'm')
     {
-        if(state == Explore)
+        if(state == MapOverview)
         {
-            state = MapOverview;
+            setExploreState();
         }
-        else if(state == MapOverview)
+        else
         {
-            state = Explore;
+            setMapOverviewState();
+        }
+    }
+    
+    if(key == 'n')
+    {
+        if(state == UniverseOverview)
+        {
+            setMapOverviewState();
+        }
+        else
+        {
+            setUniverseOverviewState();
         }
     }
     
@@ -120,7 +159,7 @@ void ofApp::keyPressed(int key)
     else if(key == '0')
         world->setZoom(35); //Really far away
 
-    ///TODO should shoul entire level
+    ///TODO should show entire level
 }
 
 //--------------------------------------------------------------
@@ -134,6 +173,9 @@ void ofApp::keyReleased(int key)
         input->upPressed = false;
     else if(key == 's' || key == OF_KEY_DOWN)
         input->downPressed = false;
+    
+    if(key == 'e')
+        input->button1Pressed = false;
 }
 
 //--------------------------------------------------------------
@@ -158,14 +200,7 @@ void ofApp::mouseReleased(int x, int y, int button)
 {
     if(state == MapOverview)
     {
-        MapWorld *selectedMapWorld = map->getSelectedMapWorld();
-        
-        if(selectedMapWorld != NULL)
-        {
-            state = Explore;
-            world->setZoom(35); //Really far away
-            travel(selectedMapWorld->location);
-        }
+        map->move();
     }
 }
 

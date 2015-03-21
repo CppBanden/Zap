@@ -49,6 +49,8 @@ int Location::value()
     ///TODO check if this works for handling coordinates, something is fishy
     return ofSign(y) * (((x + 9999) * 10000) + abs(y));
     
+    ///TODO 0,0 is currently strange as well as a horizontal line
+    
     //return x * 10000 + y;
 }
 

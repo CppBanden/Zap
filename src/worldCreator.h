@@ -16,6 +16,7 @@
 #include "settings.h"
 #include "mapWorld.h"
 #include "location.h"
+#include <vector>
 
 class WorldCreator
 {
@@ -34,8 +35,8 @@ public:
     
     static ofVec3f getRandomColor();
     static ofVec2f generateWorldSize();
+    static vector<Item> generateItems();
     static MapWorld *createMapWorld(Location locationInput);
-    static const int defaultLocation = 870301;// 50001; //217761072; //162557792; //554100416; //840460480; //993632448; //576686720;
 };
 
 #endif /* defined(__Sap__worldCreator__) */
