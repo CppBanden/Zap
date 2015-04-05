@@ -9,7 +9,7 @@
 #include "world.h"
 
 ///TODO this setting should be somewhere else
-float World::zoom = 35;//9; //35;//1.5f;
+float World::zoom = 9;//35;//9; //35;//1.5f;
 
 World::World(ofImage rocks, ofImage surface, ofImage space, int locationInput)
 {

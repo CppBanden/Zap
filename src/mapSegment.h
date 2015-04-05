@@ -13,6 +13,7 @@
 #include "location.h"
 #include "worldCreator.h"
 #include "ofMain.h"
+#include "player.h"
 
 class MapSegment
 {

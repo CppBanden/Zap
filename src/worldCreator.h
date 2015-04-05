@@ -30,7 +30,7 @@ public:
     MetaballGenerator *metaballGenerator;
     
     WorldCreator();
-    World *createWorld(int locationInput);
+    World *createWorld(int locationInput, float age = 0.5f);
     void showShader(int locationInput);
     
     static ofVec3f getRandomColor();

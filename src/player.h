@@ -18,9 +18,14 @@
 class Player
 {
 public:
+    static ofVec2f drawWorldPos;
+    
+    ofVec2f worldPos;
+    ofVec2f cameraWorldPos;
     
     ofVec2f pos;
     ofVec2f cameraPos;
+    
     ofVec2f velocity;
     ofImage image;
     bool infiniteFuel = false;
@@ -44,6 +49,11 @@ public:
     float maxMoveSpeedFloating = 0.7f;
     float fuelDrainMoveFloating = 0.0003f;
     
+    //Map Velocity
+    float moveSpeedMap = 0.000008;
+    float frictionMap = 0.0000002;
+    float maxMoveSpeedMap = 0.0006;
+
     //Digging
     float wallFriction = 0.5f;
     float digSpeed = 0.05f;
@@ -57,13 +67,15 @@ public:
     //Camera
     float cameraFollowSpeed = 0.045f;
     
-    Player(World *w, Input *i, int x, int y);
+    Player(Input *i, float x, float y);
 
     void draw();
     void drawMap();
     void update();
+    void updateMap();
+    void travel(World *world, int x, int y);
     void useFuel(float amount);
-    
+
     std::string getDebugPos();
 };
 

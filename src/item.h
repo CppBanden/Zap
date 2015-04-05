@@ -23,5 +23,4 @@ public:
     Item(int x, int y, ofColor color);
     void draw();
 };
-
 #endif /* defined(__Zap__item__) */

@@ -3,25 +3,27 @@
 void ofApp::setup()
 {
     ofSetFrameRate(Settings::frameRate);
-
+    //Location startLocation(2564,1094);
+    Location startLocation(100,100);
+    
     input = new Input();
     worldCreator = new WorldCreator();
-
-    Location startLocation(2564,1094);
-
-    travel(startLocation);
-
     map = new Map(startLocation, input);
     universeMap = new UniverseMap();
+    
+    player = new Player(input, 99.6f, 100.12f);
     
     setMapOverviewState();
 }
 
 void ofApp::setExploreState()
 {
-    travel(map->currentLocation);
-    
-    state = Explore;
+    if(map->selectedMapWorld != NULL)
+    {
+        travel(map->selectedMapWorld->location);
+        
+        state = Explore;
+    }
 }
 
 void ofApp::setMapOverviewState()
@@ -39,6 +41,10 @@ void ofApp::update()
    if(state == Explore)
    {
        player->update();
+   }
+   else if(state == MapOverview)
+   {
+       player->updateMap();
    }
 }
 
@@ -65,7 +71,7 @@ void ofApp::draw()
     }
     else if(state == MapOverview)
     {
-        map->draw();
+        map->draw(player->cameraWorldPos);
         
         player->drawMap();
     }
@@ -75,9 +81,9 @@ void ofApp::draw()
     }
     
     //Location GUI
-    std::ostringstream s;
-    s << "Location " << map->currentLocation.x << "," << map->currentLocation.y;
-    ofDrawBitmapStringHighlight(s.str(), 15, 20);
+//    std::ostringstream s;
+  //  s << "Location " << player->worldPos.x << "," << player->worldPos.y;
+    //ofDrawBitmapStringHighlight(s.str(), 15, 20);
 }
 
 bool ofApp::travel()
@@ -98,11 +104,14 @@ bool ofApp::travel(Location location)
     landingSpot.y /= 2;
 //    landingSpot.x = 460;
   //  landingSpot.y = 460;
-
-    player = new Player(world, input, landingSpot.x, landingSpot.y);
+    
+    player->travel(world, landingSpot.x, landingSpot.y);
 }
 
 //--------------------------------------------------------------
+
+float ageTest = 0;
+
 void ofApp::keyPressed(int key)
 {
     if(key == 'd' || key == OF_KEY_RIGHT)
@@ -115,7 +124,26 @@ void ofApp::keyPressed(int key)
         input->downPressed = true;
 
     if(key == 'e')
+    {
         input->button1Pressed = true;
+        
+        if(state == MapOverview)
+            map->ping();
+    }
+    
+    //Test Age
+    if(key == 'r')
+    {
+        int locationValue = world->location;
+        ageTest += 0.1f;
+        world = worldCreator->createWorld(locationValue, ageTest);
+    }
+    else if(key == 'f')
+    {
+        int locationValue = world->location;
+        ageTest -= 0.1f;
+        world = worldCreator->createWorld(locationValue, ageTest);
+    }
     
     if(key == 'o')
     {

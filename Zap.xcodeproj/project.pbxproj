@@ -10,6 +10,7 @@
 		5B03F9091A86965C00FE40E9 /* player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B03F9071A86965C00FE40E9 /* player.cpp */; };
 		5B03F90E1A86979E00FE40E9 /* world.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B03F90C1A86979E00FE40E9 /* world.cpp */; };
 		5B2445F21A90CE36001C453B /* metaballGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B2445F01A90CE36001C453B /* metaballGenerator.cpp */; };
+		5B32A8CB1ABF758E00A74469 /* ping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B32A8C91ABF758E00A74469 /* ping.cpp */; };
 		5B35BA8B1A89895700CE15E4 /* settings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B35BA891A89895700CE15E4 /* settings.cpp */; };
 		5B75F9F71A8EC9270030EDB1 /* worldCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B75F9F51A8EC9270030EDB1 /* worldCreator.cpp */; };
 		5B8894991AACBFBA00A7FB2B /* map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B8894971AACBFBA00A7FB2B /* map.cpp */; };
@@ -96,6 +97,8 @@
 		5B2446001A9129AA001C453B /* wrapTestShader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = wrapTestShader.vert; sourceTree = "<group>"; };
 		5B2446011A9129E9001C453B /* groundKamenShader.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = groundKamenShader.frag; sourceTree = "<group>"; };
 		5B2446021A9129E9001C453B /* groundKamenShader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = groundKamenShader.vert; sourceTree = "<group>"; };
+		5B32A8C91ABF758E00A74469 /* ping.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ping.cpp; sourceTree = "<group>"; };
+		5B32A8CA1ABF758E00A74469 /* ping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ping.h; sourceTree = "<group>"; };
 		5B35BA891A89895700CE15E4 /* settings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = settings.cpp; sourceTree = "<group>"; };
 		5B35BA8A1A89895700CE15E4 /* settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = settings.h; sourceTree = "<group>"; };
 		5B47FC981A92B833000AC7E3 /* player_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = player_01.png; sourceTree = "<group>"; };
@@ -319,6 +322,8 @@
 				5B9F3C4C1AB4E3A900B41D09 /* universeMap.h */,
 				5B9F3C4E1AB4F13700B41D09 /* item.cpp */,
 				5B9F3C4F1AB4F13700B41D09 /* item.h */,
+				5B32A8C91ABF758E00A74469 /* ping.cpp */,
+				5B32A8CA1ABF758E00A74469 /* ping.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -427,6 +432,7 @@
 				5B88949F1AAD16B700A7FB2B /* location.cpp in Sources */,
 				5B75F9F71A8EC9270030EDB1 /* worldCreator.cpp in Sources */,
 				5B35BA8B1A89895700CE15E4 /* settings.cpp in Sources */,
+				5B32A8CB1ABF758E00A74469 /* ping.cpp in Sources */,
 				5B8894A21AB2423B00A7FB2B /* mapSegment.cpp in Sources */,
 				5B8894991AACBFBA00A7FB2B /* map.cpp in Sources */,
 				5B03F9091A86965C00FE40E9 /* player.cpp in Sources */,

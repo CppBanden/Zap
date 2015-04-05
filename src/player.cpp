@@ -10,14 +10,19 @@
 #include "ofApp.h"
 #include "player.h"
 
-Player::Player(World *level, Input *input, int x, int y)
+ofVec2f Player::drawWorldPos;
+
+Player::Player(Input *input, float x, float y)
 {
-    this->level = level;
     this->input = input;
+    
+    worldPos.x = x;
+    worldPos.y = y;
+    cameraWorldPos.x = x;
+    cameraWorldPos.y = y;
     
     pos.x = x;
     pos.y = y;
-    
     cameraPos.x = x;
     cameraPos.y = y;
     
@@ -133,17 +138,50 @@ void Player::update()
     
     //Camera follow
     cameraPos += pos - previousPos;
-    //    cameraPos.x += pos.x - previousPos.x;
-//    cameraPos.y += pos.y - previousPos.y;
-    
     cameraPos += (pos - cameraPos) * cameraFollowSpeed;
+}
+
+void Player::updateMap()
+{
+    //Move direction
+    ofVec2f moveDir;
+    
+    if(input->rightPressed)
+        moveDir.x = 1;
+    else if(input->leftPressed)
+        moveDir.x = -1;
+    
+    if(input->upPressed)
+        moveDir.y = -1;
+    else if(input->downPressed)
+        moveDir.y = 1;
+    
+    moveDir.normalize();
+
+    //Friction
+    velocity -= velocity.normalized() * frictionMap;
+    
+    //Acceleration
+    if(moveDir.x != 0 || moveDir.y != 0)
+        velocity += moveDir * moveSpeedMap;
+    
+    float speed = velocity.length();
+    
+    //Max speed
+    if(speed > maxMoveSpeedMap)
+        velocity = velocity.normalized() * maxMoveSpeedMap;
+    
+    if(moveDir.x == 0 && moveDir.y == 0 && speed < 0.00002)
+        velocity = ofVec2f::zero();
+
+    //Camera follow
+    worldPos += velocity;
+    cameraWorldPos += (worldPos - cameraWorldPos) * cameraFollowSpeed;
 }
 
 void Player::draw()
 {
     ofVec2f screenSize = Settings::getScreenSize();
-
-    //ofDrawPlane(pos.x, pos.y, 10, 10);
     
     if(fuel > 0)
     {
@@ -169,7 +207,6 @@ void Player::draw()
     ofFill();
     ofDrawPlane(10 + 160 / 2, 45, 168, 23);
     
-    
     //Fuel bar small
     ofSetColor(100, 100, 100);
     ofFill();
@@ -180,21 +217,37 @@ void Player::draw()
 void Player::drawMap()
 {
     ofVec2f screenSize = Settings::getScreenSize();
+    float ratio = (screenSize.x / 1);
     
-    if(fuel > 0)
-    {
-        float ratio = (screenSize.x / level->zoomSize.x);
-        
-        ofVec2f drawPos;
-        drawPos.x = (level->drawArea.x - size) / 2;
-        drawPos.x += (pos.x - cameraPos.x) * ratio;
-        
-        drawPos.y = (level->drawArea.y - size) / 2;
-        drawPos.y += (pos.y - cameraPos.y) * ratio;
-        
-        ofSetColor(255);
-        image.drawSubsection(drawPos.x, drawPos.y, size, size, 0, 0, 3, 3);
-    }
+    ofVec2f drawPos;
+    drawPos.x = (screenSize.x - size) / 2;
+    drawPos.x += (worldPos.x - cameraWorldPos.x) * ratio;
+    
+    drawPos.y = (screenSize.y - size) / 2;
+    drawPos.y += (worldPos.y - cameraWorldPos.y) * ratio;
+    
+    ofSetColor(255);
+    image.drawSubsection(drawPos.x, drawPos.y, size, size, 0, 0, 3, 3);
+//    image.drawSubsection(screenSize.x / 2 - size /2, screenSize.y / 2 - size /2, size, size, 0, 0, 3, 3);
+
+    drawWorldPos = drawPos;
+    drawWorldPos.x += size / 2;
+    drawWorldPos.y += size / 2;
+    
+    std::ostringstream s;
+    s << "Location " << round(worldPos.x * 100) / 100 << ",  " << round(worldPos.y * 100) / 100;
+    ofDrawBitmapStringHighlight(s.str(), 15, 20);
+}
+
+void Player::travel(World *world, int x, int y)
+{
+    level = world;
+    
+    pos.x = x;
+    pos.y = y;
+    
+    cameraPos.x = x;
+    cameraPos.y = y;
 }
 
 void Player::useFuel(float amount)
@@ -208,11 +261,7 @@ void Player::useFuel(float amount)
 std::string Player::getDebugPos()
 {
     std::ostringstream s;
-    s << "Player pos : ";
-    s << round(pos.x);
-    s << ", ";
-    s << round(pos.y);
-
+    s << "Player pos : " << round(pos.x) << ", " << round(pos.y);
     return s.str();
 }
 

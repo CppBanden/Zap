@@ -26,7 +26,7 @@ void MapSegment::draw(int drawX, int drawY, int drawWidth, int drawHeight)
 {
     int mouseX = ofGetMouseX();
     int mouseY = ofGetMouseY();
-    
+
     for(int y = 0; y < height; ++y)
     {
         for(int x = 0; x < width; ++x)
@@ -38,25 +38,32 @@ void MapSegment::draw(int drawX, int drawY, int drawWidth, int drawHeight)
             int posY = drawY + drawHeight * offset.y;
             
             float size = (mw->areaFraction / 700000) * (drawWidth / 100);
-            size = CLAMP(size, 6, 100);
-   
-            
-            //Hover check
+//            size = CLAMP(size, 6, 500);
+
             if(*selectedMapWorld == NULL)
             {
-                if(mouseX > posX - size && mouseX < posX + size && mouseY > posY - size && mouseY < posY + size)
+                //Player check
+                ofVec2f playerPos = Player::drawWorldPos;
+                if(playerPos.x > posX - size && playerPos.x < posX + size && playerPos.y > posY - size && playerPos.y < posY + size)
                 {
                     ofSetColor(250);
                     ofCircle(posX, posY, size + 2);
                     *selectedMapWorld = mw;
                 }
+                
+                //Hover check
+/*                if(mouseX > posX - size && mouseX < posX + size && mouseY > posY - size && mouseY < posY + size)
+                {
+                    ofSetColor(250);
+                    ofCircle(posX, posY, size + 2);
+                    *selectedMapWorld = mw;
+                }*/
             }
             
             ofSetColor(mw->color);
             ofCircle(posX, posY, size);
             
-            
-            //TEMP item
+            //TEMP DEBUG item
             if(mw->items.size() > 0)
             {
                 ofSetColor(255);

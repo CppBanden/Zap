@@ -30,7 +30,7 @@ MapWorld *WorldCreator::createMapWorld(Location locationInput)
     return new MapWorld(groundColor, area, offset, locationInput, newItems);
 }
 
-World *WorldCreator::createWorld(int locationInput)
+World *WorldCreator::createWorld(int locationInput, float age)
 {
     //Handle Location
     int location;
@@ -40,11 +40,7 @@ World *WorldCreator::createWorld(int locationInput)
     else
         location = locationInput; //Travel to known location
     
-//    int i =  99999999;
-    //i =  9999 + 9999;
-    
-    //399.920.004
-
+//    int i =  99999999; //i =  9999 + 9999; //399.920.004
     //printf("%i\n", i);
     
     ofSeedRandom(location);
@@ -75,7 +71,6 @@ World *WorldCreator::createWorld(int locationInput)
     
     //World outline
     ofTexture outlineTexture = metaballGenerator->generate(worldSize, density);
-    
     
     //Outline
     float randomTimeOutline = ofRandom(0, 1000);

@@ -17,6 +17,7 @@
 #include "location.h"
 #include "mapSegment.h"
 #include "input.h"
+#include "ping.h"
 
 class Map
 {
@@ -36,12 +37,16 @@ public:
     MapWorld *selectedMapWorld;
     MapWorld *currentMapWorld;
     
+    Ping *pingTest;
+    
     Map(Location location, Input *input);
     
     void move();
     void move(Location location);
-    void draw();
-    MapWorld *getSelectedMapWorld();
+    void draw(ofVec2f pos);
+    void ping();
+    
+    MapWorld *getSelectedMapWorld();    
 };
 
 #endif /* defined(__Zap__map__) */

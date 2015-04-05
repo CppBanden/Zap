@@ -28,9 +28,7 @@ void UniverseMap::draw(Location playerLocation)
     
     int drawPosX = (screenSize.x - mapSize) / 2;
     int drawPosY = (screenSize.y - mapSize) / 2;
-    
-    
-    
+
     ofRect(drawPosX, drawPosY, mapSize, mapSize);
     int size = 20;
     int playerX = drawPosX - size / 2.0f + mapSize / 2.0f + (playerLocation.x / 9999.0f) * mapSize / 2.0f;
