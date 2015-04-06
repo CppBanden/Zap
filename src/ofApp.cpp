@@ -4,14 +4,14 @@ void ofApp::setup()
 {
     ofSetFrameRate(Settings::frameRate);
     //Location startLocation(2564,1094);
-    Location startLocation(100,100);
+    Location startLocation(30,30);
     
     input = new Input();
     worldCreator = new WorldCreator();
     map = new Map(startLocation, input);
     universeMap = new UniverseMap();
     
-    player = new Player(input, 99.6f, 100.12f);
+    player = new Player(input, startLocation.x, startLocation.y);
     
     setMapOverviewState();
 }
@@ -110,8 +110,6 @@ bool ofApp::travel(Location location)
 
 //--------------------------------------------------------------
 
-float ageTest = 0;
-
 void ofApp::keyPressed(int key)
 {
     if(key == 'd' || key == OF_KEY_RIGHT)
@@ -132,17 +130,17 @@ void ofApp::keyPressed(int key)
     }
     
     //Test Age
-    if(key == 'r')
+    if(state == MapOverview)
     {
-        int locationValue = world->location;
-        ageTest += 0.1f;
-        world = worldCreator->createWorld(locationValue, ageTest);
-    }
-    else if(key == 'f')
-    {
-        int locationValue = world->location;
-        ageTest -= 0.1f;
-        world = worldCreator->createWorld(locationValue, ageTest);
+        if(key == 'h')
+            player->worldPos.x += 3.0f;
+        else if(key == 'f')
+            player->worldPos.x -= 3.0f;
+        
+        if(key == 't')
+            player->worldPos.y -= 3.0f;
+        else if(key == 'g')
+            player->worldPos.y += 3.0f;
     }
     
     if(key == 'o')

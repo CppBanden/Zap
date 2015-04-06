@@ -9,8 +9,8 @@ int main( )
     ofSetCurrentRenderer(ofGLProgrammableRenderer::TYPE);
     
     bool fullScreen = false;
-    int defaultScreenWidth = 800;//1600;
-    int defaultScreenHeight = 450;//900;
+    int defaultScreenWidth = 1600;//800;//1600;
+    int defaultScreenHeight = 900;//450;//900;
     
     if(fullScreen)
     {

@@ -21,9 +21,10 @@ public:
     float areaFraction;
     ofColor color;
     ofVec2f offset;
+    ofVec2f pos;
     Location location;
     vector<Item> items;
-    
+
     MapWorld(ofColor colorInput, float areaFractionInput, ofVec2f offsetInput, Location locationInput);
     MapWorld(ofColor colorInput, float areaFractionInput, ofVec2f offsetInput, Location locationInput, vector<Item> items);
 };

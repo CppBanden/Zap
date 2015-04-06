@@ -27,7 +27,7 @@ void MapSegment::draw(int drawX, int drawY, int drawWidth, int drawHeight)
     int mouseX = ofGetMouseX();
     int mouseY = ofGetMouseY();
 
-    for(int y = 0; y < height; ++y)
+    for(int y = 0; y < height; ++y) git
     {
         for(int x = 0; x < width; ++x)
         {
@@ -43,7 +43,7 @@ void MapSegment::draw(int drawX, int drawY, int drawWidth, int drawHeight)
             if(*selectedMapWorld == NULL)
             {
                 //Player check
-                ofVec2f playerPos = Player::drawWorldPos;
+                ofVec2f playerPos = Player::instance->drawWorldPos;
                 if(playerPos.x > posX - size && playerPos.x < posX + size && playerPos.y > posY - size && playerPos.y < posY + size)
                 {
                     ofSetColor(250);

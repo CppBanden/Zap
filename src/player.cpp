@@ -10,7 +10,7 @@
 #include "ofApp.h"
 #include "player.h"
 
-ofVec2f Player::drawWorldPos;
+Player *Player::instance;
 
 Player::Player(Input *input, float x, float y)
 {
@@ -29,6 +29,7 @@ Player::Player(Input *input, float x, float y)
     image.loadImage("images/player_01.png");
     image.getTextureReference().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
     totalFrames = image.width/image.height;
+    instance = this;
 }
 
 void Player::update()
@@ -176,7 +177,8 @@ void Player::updateMap()
 
     //Camera follow
     worldPos += velocity;
-    cameraWorldPos += (worldPos - cameraWorldPos) * cameraFollowSpeed;
+//    cout << worldPos.x << " vel : "<< velocity.x << "\n";
+    cameraWorldPos += (worldPos - cameraWorldPos) * cameraFollowSpeedMap;
 }
 
 void Player::draw()
@@ -218,18 +220,25 @@ void Player::drawMap()
 {
     ofVec2f screenSize = Settings::getScreenSize();
     float ratio = (screenSize.x / 1);
-    
+
     ofVec2f drawPos;
     drawPos.x = (screenSize.x - size) / 2;
     drawPos.x += (worldPos.x - cameraWorldPos.x) * ratio;
     
     drawPos.y = (screenSize.y - size) / 2;
     drawPos.y += (worldPos.y - cameraWorldPos.y) * ratio;
+
+    //ofVec2f drawPos = Utils::getMapDrawPos(worldPos - cameraWorldPos, size);
+    
+    drawPos = Utils::getMapDrawPos(worldPos, size);
     
     ofSetColor(255);
     image.drawSubsection(drawPos.x, drawPos.y, size, size, 0, 0, 3, 3);
-//    image.drawSubsection(screenSize.x / 2 - size /2, screenSize.y / 2 - size /2, size, size, 0, 0, 3, 3);
 
+//    image.drawSubsection(screenSize.x / 2 - size /2, screenSize.y / 2 - size /2, size, size, 0, 0, 3, 3);
+    
+//    worldPos = worldPos;
+    
     drawWorldPos = drawPos;
     drawWorldPos.x += size / 2;
     drawWorldPos.y += size / 2;

@@ -19,13 +19,16 @@ void Ping::draw()
         return;
 
     velocity -= 0.03f;
-
+    
     if(velocity < 1.0f)
-    velocity = 0;
+        velocity = 0;
 
     size += velocity;
 
     ofNoFill();
     ofSetColor(230, 230, 255, 100);
-    ofCircle(origin.x, origin.y, size);
+//    ofCircle(origin.x, origin.y, size);
+    
+    ofVec2f drawPos = Utils::getMapDrawPos(origin);
+    ofCircle(drawPos.x, drawPos.y, size);
 }

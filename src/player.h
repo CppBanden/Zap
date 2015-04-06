@@ -14,12 +14,14 @@
 #include "input.h"
 #include "world.h"
 #include "settings.h"
+#include "utils.h"
 
 class Player
 {
 public:
-    static ofVec2f drawWorldPos;
+    static Player *instance;
     
+    ofVec2f drawWorldPos;
     ofVec2f worldPos;
     ofVec2f cameraWorldPos;
     
@@ -50,10 +52,11 @@ public:
     float fuelDrainMoveFloating = 0.0003f;
     
     //Map Velocity
-    float moveSpeedMap = 0.000008;
-    float frictionMap = 0.0000002;
-    float maxMoveSpeedMap = 0.0006;
-
+    float moveSpeedMap = 0.0001;
+    float frictionMap = 0.000003;
+    float maxMoveSpeedMap = 0.002;
+    float cameraFollowSpeedMap = 0.04f;
+    
     //Digging
     float wallFriction = 0.5f;
     float digSpeed = 0.05f;

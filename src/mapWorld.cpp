@@ -23,4 +23,8 @@ MapWorld::MapWorld(ofColor colorInput, float areaFractionInput, ofVec2f offsetIn
     offset = offsetInput;
     location = locationInput;
     items = itemsInput;
+    
+    ///TODO this could be cleaner no hardcoded size
+    pos.x = floor(location.x / 3.0f) * 3.0f + offset.x * 3.0f;
+    pos.y = floor(location.y / 3.0f) * 3.0f + offset.y * 3.0f;
 }

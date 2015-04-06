@@ -30,7 +30,7 @@ MapWorld *WorldCreator::createMapWorld(Location locationInput)
     return new MapWorld(groundColor, area, offset, locationInput, newItems);
 }
 
-World *WorldCreator::createWorld(int locationInput, float age)
+World *WorldCreator::createWorld(int locationInput)
 {
     //Handle Location
     int location;
@@ -201,7 +201,7 @@ ofVec2f WorldCreator::generateWorldSize()
 {
     float maxSize = 2500;
     float minSize = 500;
-
+    
     ofVec2f worldSize;
     worldSize.x = ofRandom(minSize, maxSize);
     worldSize.y = ofRandom( MAX(worldSize.x / 2, minSize), MIN(worldSize.x * 2, maxSize));
